@@ -24,9 +24,12 @@ GlobalVariable Property MAX_PETS Auto Const Mandatory
 ;;;
 ;;; Properties
 ;;;
-Message Property PET_MENU Auto Const mandatory
+Message Property PET_MENU_NOTOWNED Auto Const mandatory
+Message Property PET_MENU_OWNED Auto Const mandatory
+Message Property PET_MENU_OWNED_SCALING Auto Const mandatory
 Message Property FAILED_MAX_PETS Auto Const mandatory
 Message Property FAILED_PETBED_OWNED Auto Const mandatory
+Message Property FAILED_PETBED_NOT_OWNED Auto Const mandatory
 Message Property FAILED_NOT_IMPLEMENTED Auto Const mandatory
 Message Property PETBED_OWNED_MESG Auto Const Mandatory
 Keyword Property PETBED_HAS_OWNER Auto Const Mandatory
@@ -45,7 +48,11 @@ ObjectReference Property myPet Auto
 ;;;
 Event OnActivate(ObjectReference akActionRef)
   If (akActionRef == Game.GetPlayer() as ObjectReference)
-    self.ProcessMenu(PET_MENU, -1, True)
+    If (self.HasKeyword(PETBED_HAS_OWNER) == False)
+      self.ProcessMenu(PET_MENU_NOTOWNED, -1, True)
+    Else
+      self.ProcessMenu(PET_MENU_OWNED, -1, True)
+    EndIf
   EndIf
 EndEvent
 
@@ -56,21 +63,100 @@ EndEvent
 Function ProcessMenu(Message message, Int menuButtonClicked, Bool menuActive)
   While (menuActive)
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;; Show Pet Main Menu
-    If (message == PET_MENU)
-      menuButtonClicked = PET_MENU.Show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    ;; Show No Pet Owned Menu
+    If (message == PET_MENU_NOTOWNED)
+      menuButtonClicked = PET_MENU_NOTOWNED.Show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
       If (menuButtonClicked == 0)
         ;; CLICKED 0: Close Menu Clicked
         menuActive = False
       ElseIf (menuButtonClicked == 1)
         ;; CLICKED 1: Call Pet
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "Main Menu Button 1 clicked call pet.", 0, Venpi_DebugEnabled.GetValueInt())
+        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_NOTOWNED Button 1 clicked - call pet.", 0, Venpi_DebugEnabled.GetValueInt())
         self.SummonPet()
         menuActive = False
-      ElseIF (menuButtonClicked == 2) 
-        ;; CLICKED 2: Release Pet
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "Main Menu Button 1 clicked deploying pet bed.", 0, Venpi_DebugEnabled.GetValueInt())
+      EndIf
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Show Pet Owned Menu
+    ElseIf (message == PET_MENU_OWNED)
+      menuButtonClicked = PET_MENU_OWNED.Show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+      If (menuButtonClicked == 0)
+        ;; CLICKED 0: Close Menu Clicked
+        menuActive = False
+      ElseIf (menuButtonClicked == 1)
+        ;; CLICKED 1: Release Pet
+        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 1 clicked - release pet.", 0, Venpi_DebugEnabled.GetValueInt())
         self.ReleasePet()
+        menuActive = False
+      ElseIF (menuButtonClicked == 2) 
+        ;; CLICKED 2: Scale Pet
+        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 2 clicked - scale pet.", 0, Venpi_DebugEnabled.GetValueInt())
+        message = PET_MENU_OWNED_SCALING
+      ElseIF (menuButtonClicked == 3) 
+        ;; CLICKED 3: Scale Pet
+        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 3 clicked - recall pet to bed.", 0, Venpi_DebugEnabled.GetValueInt())
+        self.RecallPet()
+        menuActive = False
+      EndIf
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Show Pet Own Scaling Menu
+    ElseIf (message == PET_MENU_OWNED_SCALING)
+      menuButtonClicked = PET_MENU_OWNED_SCALING.Show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+      message = PET_MENU_OWNED ;; Return to root menu
+      If (menuButtonClicked == 0)
+        ;; CLICKED 0: Return to main menu
+      ElseIF (menuButtonClicked == 1) 
+        ;; CLICKED 1: Scale to 150%
+        self.ScalePet(1.50)
+        menuActive = False
+      ElseIF (menuButtonClicked == 2) 
+        ;; CLICKED 2: Scale to 140%
+        self.ScalePet(1.40)
+        menuActive = False
+      ElseIF (menuButtonClicked == 3) 
+        ;; CLICKED 3: Scale to 130%
+        self.ScalePet(1.30)
+        menuActive = False
+      ElseIF (menuButtonClicked == 4) 
+        ;; CLICKED 4: Scale to 120%
+        self.ScalePet(1.30)
+        menuActive = False
+      ElseIF (menuButtonClicked == 5) 
+        ;; CLICKED 5: Scale to 110%
+        self.ScalePet(1.10)
+        menuActive = False
+      ElseIF (menuButtonClicked == 6) 
+        ;; CLICKED 6: Scale to 90%
+        self.ScalePet(0.90)
+        menuActive = False
+      ElseIF (menuButtonClicked == 7) 
+        ;; CLICKED 7: Scale to 80%
+        self.ScalePet(0.80)
+        menuActive = False
+      ElseIF (menuButtonClicked == 8) 
+        ;; CLICKED 8: Scale to 70%
+        self.ScalePet(0.70)
+        menuActive = False
+      ElseIF (menuButtonClicked == 9) 
+        ;; CLICKED 9: Scale to 60%
+        self.ScalePet(0.60)
+        menuActive = False
+      ElseIF (menuButtonClicked == 10) 
+        ;; CLICKED 10: Scale to 50%
+        self.ScalePet(0.50)
+        menuActive = False
+      ElseIF (menuButtonClicked == 11) 
+        ;; CLICKED 11: Scale to 40%
+        self.ScalePet(0.40)
+        menuActive = False
+      ElseIF (menuButtonClicked == 12) 
+        ;; CLICKED 12: Scale to 30%
+        self.ScalePet(0.30)
+        menuActive = False
+      ElseIF (menuButtonClicked == 13) 
+        ;; CLICKED 13: Scale to 15%
+        self.ScalePet(0.15)
         menuActive = False
       EndIf
     EndIf ;; End Main Menu
@@ -89,8 +175,9 @@ Function SummonPet()
   Else
     VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Releasing a new pet of type " + PET_TYPE + ".", 0, Venpi_DebugEnabled.GetValueInt())
     Float[] offset = new Float[3]
-    offset[CONST_OFFSET_X] = 0.5
-    offset[CONST_OFFSET_Y] = 0.5
+    offset[CONST_OFFSET_X] = 0
+    offset[CONST_OFFSET_Y] = -1.5
+    offset[CONST_OFFSET_z] = 0
     myPet = self.PlaceAtMe(PET_TYPE as Form, 1, False, False, True, offset, None, True)
     self.AddKeyword(PETBED_HAS_OWNER)
     self.SetActivateTextOverride(PETBED_OWNED_MESG)
@@ -98,7 +185,21 @@ Function SummonPet()
   EndIf
 EndFunction
 
+Function ScalePet(Float scale)
+  If (myPet == None || self.HasKeyword(PETBED_HAS_OWNER) == False)
+    VPI_Debug.DebugMessage("PetKioskScript", "ScalePet", "Scale pet failed pet is null or pet bed is not owned", 0, Venpi_DebugEnabled.GetValueInt())
+    FAILED_PETBED_NOT_OWNED.show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    Return
+  EndIf
+  myPet.SetScale(scale)
+EndFunction
+
 Function ReleasePet()
   VPI_Debug.DebugMessage("PetKioskScript", "ReleasePet", "NOT IMPLEMENTED", 0, Venpi_DebugEnabled.GetValueInt())
   FAILED_NOT_IMPLEMENTED.show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+EndFunction
+
+Function RecallPet()
+  VPI_Debug.DebugMessage("PetKioskScript", "RecallPet", "Moving pet back to the pet bed.", 0, Venpi_DebugEnabled.GetValueInt())
+  myPet.MoveTo(self, 0, -1.5, 0, True, True)
 EndFunction

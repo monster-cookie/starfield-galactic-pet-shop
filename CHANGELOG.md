@@ -1,4 +1,10 @@
 # V1.0 Permutations
 
+## V1.0.1
+* Added foxbat as rare
+* Attempting to work on spawning point so they are less likely to go through the roof but I think they are just using hatches
+* Added scaling to the pet bed menu.
+* Adding a return to pet bed function to pet bed menu for errant pets that go wondering around on the roof. 
+
 ## V1.0.0
 * Initial Release
