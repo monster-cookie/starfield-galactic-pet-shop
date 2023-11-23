@@ -27,21 +27,14 @@ mkdir "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA
 @REM mkdir "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Textures\textures\setdressing\terminals\splashscreens\"
 
 @REM Compile and deploy Scripts to Dist-BA2-Main folder
-Caprica-Experimental.exe --game starfield --flags "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Tools\Starfield_Papyrus_Flags.flg" --import "C:\Repositories\Public\Starfield-Script-Source;C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\Papyrus" --output "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Main\Scripts" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\Papyrus\VPI_Helper.psc" && (
-  @echo "VPI_Helper.psc successfully compiled"
+@echo "Compiling all script in Source/Papyrus to Dist-BA2-Main folder"
+Caprica-0.3.0.exe --game starfield --import "C:\Repositories\Public\Starfield-Script-Source;C:\Repositories\Public\Starfield Mods\starfield-venpi-core\Source\Papyrus;C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\Papyrus" --output "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Main\Scripts" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\Papyrus" -R -q && (
+  @echo "Compile all scripts has successfully compiled"
   (call )
 ) || (
-  @echo "Error:  VPI_Helper.psc failed to compile <======================================="
+  @echo "Error:  Compile all scripts has failed to compile <======================================="
   exit /b 1
 )
-
-@REM Caprica-Experimental.exe --game starfield --flags "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Tools\Starfield_Papyrus_Flags.flg" --import "C:\Repositories\Public\Starfield-Script-Source;C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\Papyrus" --output "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Main\Scripts" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\Papyrus\VPI_VendorActivatorScript.psc" && (
-@REM   @echo "VPI_VendorActivatorScript.psc successfully compiled"
-@REM   (call )
-@REM ) || (
-@REM   @echo "ERROR:  VPI_VendorActivatorScript.psc failed to compile <======================================="
-@REM   exit /b 1
-@REM )
 
 @REM ESM is purely binary so need to pull from starfield dir where xedit has to have it 
 @echo "Copying the ESM from MO2 into the Dist folder"
