@@ -4,14 +4,14 @@ ScriptName PetBedScript Extends ObjectReference
 ;;;
 ;;; Constants
 ;;;
-Int CONST_AILEVELMOD_EASY = 0 Const
-Int CONST_AILEVELMOD_MEDIUM = 1 Const
-Int CONST_AILEVELMOD_HARD = 2 Const
-Int CONST_AILEVELMOD_VERYHARD = 4 Const
+; Int CONST_AILEVELMOD_EASY = 0 Const
+; Int CONST_AILEVELMOD_MEDIUM = 1 Const
+; Int CONST_AILEVELMOD_HARD = 2 Const
+; Int CONST_AILEVELMOD_VERYHARD = 4 Const
 
-Int CONST_OFFSET_X=0 Const
-Int CONST_OFFSET_Y=1 Const
-Int CONST_OFFSET_Z=2 Const
+; Int CONST_OFFSET_X=0 Const
+; Int CONST_OFFSET_Y=1 Const
+; Int CONST_OFFSET_Z=2 Const
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -35,6 +35,8 @@ Message Property PETBED_OWNED_MESG Auto Const Mandatory
 Keyword Property PETBED_HAS_OWNER Auto Const Mandatory
 ActorBase Property PET_TYPE Auto Const mandatory
 FormList Property ActivePetsList Auto Const mandatory
+Keyword Property CCT_Instance_Name_Flyer Auto Const Mandatory
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -175,9 +177,19 @@ Function SummonPet()
   Else
     VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Releasing a new pet of type " + PET_TYPE + ".", 0, Venpi_DebugEnabled.GetValueInt())
     Float[] offset = new Float[3]
-    offset[CONST_OFFSET_X] = 0
-    offset[CONST_OFFSET_Y] = -1.5
-    offset[CONST_OFFSET_z] = 0
+
+    if (PET_TYPE.HasKeyword(CCT_Instance_Name_Flyer))
+      ;; PET is a flyer and needs z axis increased by 1.5
+      VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Pet is a flyer adjusting coords(x, y, z) to 0, -1.5, 1.5.", 0, Venpi_DebugEnabled.GetValueInt())
+      offset[0] = 1.5
+      offset[1] = -1.5
+      offset[2] = 0
+    Else
+      offset[0] = 0
+      offset[1] = -1.5
+      offset[2] = 0
+    EndIf
+
     myPet = self.PlaceAtMe(PET_TYPE as Form, 1, False, False, True, offset, None, True)
     self.AddKeyword(PETBED_HAS_OWNER)
     self.SetActivateTextOverride(PETBED_OWNED_MESG)
@@ -201,5 +213,12 @@ EndFunction
 
 Function RecallPet()
   VPI_Debug.DebugMessage("PetKioskScript", "RecallPet", "Moving pet back to the pet bed.", 0, Venpi_DebugEnabled.GetValueInt())
-  myPet.MoveTo(self, 0, -1.5, 0, True, True)
+
+  if (PET_TYPE.HasKeyword(CCT_Instance_Name_Flyer))
+    ;; PET is a flyer and needs z axis increased by 1.5
+    VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Pet is a flyer adjusting recall coords(x, y, z) to 0, -1.5, 1.5.", 0, Venpi_DebugEnabled.GetValueInt())
+    myPet.MoveTo(self, 0, -1.5, 1.5, True, True)
+  Else
+    myPet.MoveTo(self, 0, -1.5, 0, True, True)
+  EndIf
 EndFunction
