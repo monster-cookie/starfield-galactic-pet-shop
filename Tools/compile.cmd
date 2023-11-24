@@ -53,7 +53,7 @@ copy /y "D:\MO2Staging\Starfield\mods\GalacticPetShop-Experimental\GalacticPetSh
 
 @REM Create and copy the BA2 Main Archive to Dist folder
 @echo "Creating the BA2 Main Archive"
-BSArch64.exe pack "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Main" "GalacticPetShop - Main.ba2" -sf1 -mt && (
+.\BSArch64.exe pack "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Main" "GalacticPetShop - Main.ba2" -sf1 -mt && (
   @echo "Main Archive successfully assembled"
   (call )
 ) || (
@@ -61,6 +61,7 @@ BSArch64.exe pack "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-
   exit /b 1
 )
 
+@REM Copying the BA2 Archives to the Dist folder
 @echo "Copying the BA2 Archives to the Dist folder"
 @REM copy /y "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Textures\GalacticPetShop - Textures.ba2" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist"
 copy /y "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Main\GalacticPetShop - Main.ba2" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist"
