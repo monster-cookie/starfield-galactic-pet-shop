@@ -1,5 +1,8 @@
 # V1.0 Permutations
 
+## V1.0.4
+* Missed back to 100% on the scale menu
+
 ## V1.0.3
 * Forgot to push up on the z axis. The flyer AI is stupid is just flies along the X/Y plane only so flyers need a special height on spawn. Adding a new keyword that pushes flyers up 1.5u on a ship and 5u elsewhere. 
 

@@ -129,35 +129,39 @@ Function ProcessMenu(Message message, Int menuButtonClicked, Bool menuActive)
         self.ScalePet(1.10)
         menuActive = False
       ElseIF (menuButtonClicked == 6) 
-        ;; CLICKED 6: Scale to 90%
-        self.ScalePet(0.90)
+        ;; CLICKED 6: Scale to 100%
+        self.ScalePet(1.00)
         menuActive = False
       ElseIF (menuButtonClicked == 7) 
-        ;; CLICKED 7: Scale to 80%
-        self.ScalePet(0.80)
+        ;; CLICKED 7: Scale to 90%
+        self.ScalePet(0.90)
         menuActive = False
       ElseIF (menuButtonClicked == 8) 
-        ;; CLICKED 8: Scale to 70%
-        self.ScalePet(0.70)
+        ;; CLICKED 8: Scale to 80%
+        self.ScalePet(0.80)
         menuActive = False
       ElseIF (menuButtonClicked == 9) 
-        ;; CLICKED 9: Scale to 60%
-        self.ScalePet(0.60)
+        ;; CLICKED 9: Scale to 70%
+        self.ScalePet(0.70)
         menuActive = False
       ElseIF (menuButtonClicked == 10) 
-        ;; CLICKED 10: Scale to 50%
-        self.ScalePet(0.50)
+        ;; CLICKED 10: Scale to 60%
+        self.ScalePet(0.60)
         menuActive = False
       ElseIF (menuButtonClicked == 11) 
-        ;; CLICKED 11: Scale to 40%
-        self.ScalePet(0.40)
+        ;; CLICKED 11: Scale to 50%
+        self.ScalePet(0.50)
         menuActive = False
       ElseIF (menuButtonClicked == 12) 
-        ;; CLICKED 12: Scale to 30%
-        self.ScalePet(0.30)
+        ;; CLICKED 12: Scale to 40%
+        self.ScalePet(0.40)
         menuActive = False
       ElseIF (menuButtonClicked == 13) 
-        ;; CLICKED 13: Scale to 15%
+        ;; CLICKED 13: Scale to 30%
+        self.ScalePet(0.30)
+        menuActive = False
+      ElseIF (menuButtonClicked == 14) 
+        ;; CLICKED 14: Scale to 15%
         self.ScalePet(0.15)
         menuActive = False
       EndIf
