@@ -37,7 +37,6 @@ ActorBase Property PET_TYPE Auto Const mandatory
 FormList Property ActivePetsList Auto Const mandatory
 Keyword Property CCT_Instance_Name_Flyer Auto Const Mandatory
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; Variables
