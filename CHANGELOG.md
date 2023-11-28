@@ -2,6 +2,8 @@
 
 ## V1.0.5
 * You can now have your pets follow you anywhere and have them stop following you if you desire. They are still immortal non-combat pets. THe CCT system used as the basis for this has odd weapon attachments driven through a funk omod template. I'm still trying to figure a way around it to give them fighting abilities. 
+* New options on the owned pet management pet screen control the follower state. 
+* I had to make a whole new pet follower system for this as the game one keys human stuff for a lot of things and having your pet start idle chattering is very lore breaking if funny lol. 
 
 ## V1.0.4
 * Missed back to 100% on the scale menu
