@@ -6,39 +6,44 @@ ScriptName SQ_PetsScript Extends SQ_ActorRolesScript conditional
 ;;; Properties
 ;;;
 Group Autofill
-  ActorValue Property IdleChatterTimeMax Auto Const mandatory
-  ActorValue Property IdleChatterTimeMin Auto Const mandatory
-  GlobalVariable Property FOL_IdleChatterTimeMax Auto Const mandatory
-  GlobalVariable Property FOL_IdleChatterTimeMin Auto Const mandatory
-  ActorValue Property FOL_PreviousIdleChatterTimeMax Auto Const mandatory
-  ActorValue Property FOL_PreviousIdleChatterTimeMin Auto Const mandatory
-  ActorValue Property PetState Auto Const mandatory
+  GlobalVariable Property PET_IdleChatterTimeMax Auto Const mandatory
+  GlobalVariable Property PET_IdleChatterTimeMin Auto Const mandatory
   GlobalVariable Property iFollower_Com_Follow Auto Const mandatory
   GlobalVariable Property iFollower_Com_Wait Auto Const mandatory
   GlobalVariable Property iFollower_Com_GoHome Auto Const mandatory
+  GlobalVariable Property PlayerPets_HasPet Auto Const mandatory
+  GlobalVariable Property PlayerPets_HasPetFollowing Auto Const mandatory
+  GlobalVariable Property PlayerPets_HasPetWaiting Auto Const mandatory
+  GlobalVariable Property PlayerPets_Count Auto Const mandatory
+  GlobalVariable Property PlayerPets_CountFollowing Auto Const mandatory
+  GlobalVariable Property PlayerPets_CountWaiting Auto Const mandatory
+
+  ActorValue Property PetState Auto Const mandatory
+  ActorValue Property IdleChatterTimeMax Auto Const mandatory
+  ActorValue Property IdleChatterTimeMin Auto Const mandatory
+  ActorValue Property PET_PreviousIdleChatterTimeMax Auto Const mandatory
+  ActorValue Property PET_PreviousIdleChatterTimeMin Auto Const mandatory
+  ActorValue Property Cached_PrePetAggression Auto Const mandatory
+
+  Faction Property SQ_Followers_GroupFormation_Faction Auto Const mandatory
+
   Keyword Property SQ_Followers_Link_WaitAtRef Auto Const mandatory
   Keyword Property SQ_Followers_IdleChatterAllowed Auto Const mandatory
-  Faction Property SQ_Followers_GroupFormation_Faction Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_HasFollower Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_HasFollowerFollowing Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_HasFollowerWaiting Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_HasCompanion Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_HasCompanionFollowing Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_HasCompanionWaiting Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_Count Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_CountFollowing Auto Const mandatory
-  GlobalVariable Property PlayerFollowers_CountWaiting Auto Const mandatory
   Keyword Property SQ_Followers_TeleportToShipWithPlayerWhenWaiting Auto Const mandatory
   Keyword Property SQ_Followers_DisallowTeleportWaitingFollowersToShip Auto Const mandatory
-  Package Property SQ_Followers_Wait Auto Const mandatory
-  ActorValue Property Cached_PreFollowerAggression Auto Const mandatory
+
+  Package Property SQ_Pets_Wait Auto Const mandatory
+EndGroup
+
+Group Related_Quests_Autofill
+  SQ_PetsScript Property SQ_Pets Auto Const mandatory
 EndGroup
 
 Group Properties
   ReferenceAlias Property PlayerShipCrewMarker Auto Const mandatory
   { PlayerShipCrewMarker alias in SQ_PlayerShip }
-  Int Property ObjectiveRetrieveWaitingFollowers = 100 Auto Const
-  { Objective to turn on if you have any followers waiting for you to return }
+  Int Property ObjectiveRetrieveWaitingPets = 100 Auto Const
+  { Objective to turn on if you have any pets waiting for you to return }
 EndGroup
 
 Float Property AllPetState = 1.0 Auto conditional hidden
@@ -49,7 +54,7 @@ Float Property AllPetState = 1.0 Auto conditional hidden
 ;;;
 Int CountUpdateTrackingRequests
 Actor PlayerRef
-Int SkipNextWaitingFollowersObjective
+Int SkipNextWaitingPetObjective
 Float TimerDur_UpdateTrackingData = 1.0 Const
 Int TimerID_UpdateTrackingGlobalsAndObjectives = 1 Const
 
@@ -58,31 +63,31 @@ Int TimerID_UpdateTrackingGlobalsAndObjectives = 1 Const
 ;;; Events
 ;;;
 Event OnInit()
-  PlayerRef = Game.GetPlayer() ; #DEBUG_LINE_NO:67
-  Self.RegisterForRemoteEvent((Alias_Active as RefCollectionAlias) as ScriptObject, "OnAliasChanged") ; #DEBUG_LINE_NO:68
-  Self.RegisterForRemoteEvent(PlayerRef as ScriptObject, "OnLocationChange") ; #DEBUG_LINE_NO:69
+  PlayerRef = Game.GetPlayer()
+  Self.RegisterForRemoteEvent((Alias_Active as RefCollectionAlias) as ScriptObject, "OnAliasChanged")
+  Self.RegisterForRemoteEvent(PlayerRef as ScriptObject, "OnLocationChange")
 EndEvent
 
 Event OnTimer(Int aiTimerID)
-  If aiTimerID == TimerID_UpdateTrackingGlobalsAndObjectives ; #DEBUG_LINE_NO:73
-    CountUpdateTrackingRequests -= 1 ; #DEBUG_LINE_NO:74
-    Self.UpdateTrackingGlobalsAndObjectives() ; #DEBUG_LINE_NO:75
-    If CountUpdateTrackingRequests > 0 ; #DEBUG_LINE_NO:77
-      CountUpdateTrackingRequests = 1 ; #DEBUG_LINE_NO:78
-      Self.StartTimer(TimerDur_UpdateTrackingData, TimerID_UpdateTrackingGlobalsAndObjectives) ; #DEBUG_LINE_NO:79
+  If (aiTimerID == TimerID_UpdateTrackingGlobalsAndObjectives)
+    CountUpdateTrackingRequests -= 1
+    Self.UpdateTrackingGlobalsAndObjectives()
+    If (CountUpdateTrackingRequests > 0)
+      CountUpdateTrackingRequests = 1
+      Self.StartTimer(TimerDur_UpdateTrackingData, TimerID_UpdateTrackingGlobalsAndObjectives)
     EndIf
   EndIf
 EndEvent
 
 Event RefCollectionAlias.OnAliasChanged(RefCollectionAlias akSender, ObjectReference akObject, Bool abRemove)
-  If akSender == Alias_Active as RefCollectionAlias ; #DEBUG_LINE_NO:92
-    Self.TriggerTrackingGlobalsAndObjectivesUpdate() ; #DEBUG_LINE_NO:93
+  If (akSender == Alias_Active as RefCollectionAlias)
+    Self.TriggerTrackingGlobalsAndObjectivesUpdate()
   EndIf
 EndEvent
 
 Event Actor.OnLocationChange(Actor akSender, Location akOldLoc, Location akNewLoc)
-  If akSender == PlayerRef ; #DEBUG_LINE_NO:99
-    Self.TeleportWaitingFollowersToShip(akNewLoc) ; #DEBUG_LINE_NO:100
+  If (akSender == PlayerRef)
+    Self.TeleportWaitingFollowersToShip(akNewLoc)
   EndIf
 EndEvent
 
@@ -90,6 +95,19 @@ EndEvent
 ;;;
 ;;; Functions
 ;;;
+Function TriggerTrackingGlobalsAndObjectivesUpdate()
+  CountUpdateTrackingRequests += 1
+  Self.StartTimer(TimerDur_UpdateTrackingData, TimerID_UpdateTrackingGlobalsAndObjectives)
+EndFunction
+
+Function TeleportWaitingFollowersToShip(Location akNewLoc)
+  If (PlayerRef.GetCurrentShipRef() != None)
+    If (akNewLoc as Bool && (akNewLoc.HasKeyword(SQ_Followers_DisallowTeleportWaitingFollowersToShip) == False))
+      Self.TeleportPets(PlayerRef as ObjectReference, None, False, True, True, False, False)
+    EndIf
+  EndIf
+EndFunction
+
 Function _CustomSetRoleAvaliable(Actor ActorToUpdate)
   ; Empty function
 EndFunction
@@ -98,283 +116,235 @@ Function _CustomSetRoleUnavailable(Actor ActorToUpdate)
   ; Empty function
 EndFunction
 
-Function TriggerTrackingGlobalsAndObjectivesUpdate()
-  CountUpdateTrackingRequests += 1 ; #DEBUG_LINE_NO:85
-  Self.StartTimer(TimerDur_UpdateTrackingData, TimerID_UpdateTrackingGlobalsAndObjectives) ; #DEBUG_LINE_NO:86
-EndFunction
-
-Function TeleportWaitingFollowersToShip(Location akNewLoc)
-  If PlayerRef.GetCurrentShipRef() != None ; #DEBUG_LINE_NO:106
-    If akNewLoc as Bool && akNewLoc.HasKeyword(SQ_Followers_DisallowTeleportWaitingFollowersToShip) ; #DEBUG_LINE_NO:107
-      
-    Else
-      Self.TeleportFollowers(PlayerRef as ObjectReference, None, False, True, True, False, False) ; #DEBUG_LINE_NO:112
-    EndIf
-  EndIf
-EndFunction
-
 Function _CustomSetRoleActive(Actor ActorToUpdate, Actor PriorActiveActor)
-  Self.SetGroupFormationFactionData(ActorToUpdate) ; #DEBUG_LINE_NO:137
-  ActorToUpdate.SetPlayerTeammate(True, False, False) ; #DEBUG_LINE_NO:140
-  Self.SetIdleChatterTimes(ActorToUpdate, True) ; #DEBUG_LINE_NO:141
-  ActorToUpdate.SetNotShowOnStealthMeter(True) ; #DEBUG_LINE_NO:142
-  ActorValue aggressionAV = Game.GetAggressionAV() ; #DEBUG_LINE_NO:145
-  Float aggression = ActorToUpdate.GetValue(aggressionAV) ; #DEBUG_LINE_NO:146
-  ActorToUpdate.SetValue(Cached_PreFollowerAggression, aggression) ; #DEBUG_LINE_NO:147
-  ActorToUpdate.SetValue(aggressionAV, 0.0) ; #DEBUG_LINE_NO:150
-  Self.CommandFollow(ActorToUpdate) ; #DEBUG_LINE_NO:153
+  Self.SetGroupFormationFactionData(ActorToUpdate)
+  ActorToUpdate.SetPlayerTeammate(True, False, False)
+  Self.SetIdleChatterTimes(ActorToUpdate, True)
+  ActorToUpdate.SetNotShowOnStealthMeter(True)
+  ActorValue aggressionAV = Game.GetAggressionAV()
+  Float aggression = ActorToUpdate.GetValue(aggressionAV)
+  ActorToUpdate.SetValue(Cached_PrePetAggression, aggression)
+  ActorToUpdate.SetValue(aggressionAV, 0.0)
+  Self.CommandFollow(ActorToUpdate)
 EndFunction
 
 Function _CustomSetRoleInactive(Actor ActorToUpdate)
-  Self.UnsetGroupFormationFactionData(ActorToUpdate) ; #DEBUG_LINE_NO:160
-  ActorToUpdate.SetPlayerTeammate(False, False, False) ; #DEBUG_LINE_NO:161
-  Self.SetIdleChatterTimes(ActorToUpdate, False) ; #DEBUG_LINE_NO:162
-  ActorToUpdate.SetNotShowOnStealthMeter(False) ; #DEBUG_LINE_NO:163
-  ActorValue aggressionAV = Game.GetAggressionAV() ; #DEBUG_LINE_NO:166
-  Float aggression = ActorToUpdate.GetValue(Cached_PreFollowerAggression) ; #DEBUG_LINE_NO:167
-  ActorToUpdate.SetValue(aggressionAV, aggression) ; #DEBUG_LINE_NO:171
+  Self.UnsetGroupFormationFactionData(ActorToUpdate)
+  ActorToUpdate.SetPlayerTeammate(False, False, False)
+  Self.SetIdleChatterTimes(ActorToUpdate, False)
+  ActorToUpdate.SetNotShowOnStealthMeter(False)
+  ActorValue aggressionAV = Game.GetAggressionAV()
+  Float aggression = ActorToUpdate.GetValue(Cached_PrePetAggression)
+  ActorToUpdate.SetValue(aggressionAV, aggression)
 EndFunction
 
-Function SetGroupFormationFactionData(Actor ActorToSet)
-  Int rank = 0 ; #DEBUG_LINE_NO:175
-  If SQ_Companions.IsCompanion(ActorToSet, True) || SQ_Crew.IsEliteCrew(ActorToSet) ; #DEBUG_LINE_NO:176
-    rank = 2 ; #DEBUG_LINE_NO:177
-  EndIf
-  ActorToSet.SetFactionRank(SQ_Followers_GroupFormation_Faction, rank) ; #DEBUG_LINE_NO:181
-  ActorToSet.SetGroupFaction(SQ_Followers_GroupFormation_Faction) ; #DEBUG_LINE_NO:182
+Function SetGroupFormationFactionData(Actor ActorToUpdate)
+  ActorToUpdate.SetFactionRank(SQ_Followers_GroupFormation_Faction, 0)
+  ActorToUpdate.SetGroupFaction(SQ_Followers_GroupFormation_Faction)
 EndFunction
 
-Function UnsetGroupFormationFactionData(Actor ActorToSet)
-  ActorToSet.RemoveFromFaction(SQ_Followers_GroupFormation_Faction) ; #DEBUG_LINE_NO:189
-  ActorToSet.SetGroupFaction(None) ; #DEBUG_LINE_NO:190
+Function UnsetGroupFormationFactionData(Actor ActorToUpdate)
+  ActorToUpdate.RemoveFromFaction(SQ_Followers_GroupFormation_Faction)
+  ActorToUpdate.SetGroupFaction(None)
 EndFunction
 
-Function SetIdleChatterTimes(Actor ActorToSet, Bool IsFollower)
-  If ActorToSet.HasKeyword(SQ_Followers_IdleChatterAllowed) ; #DEBUG_LINE_NO:200
-    
-  ElseIf IsFollower
-    Self._SetIdleChatterTimeAV(ActorToSet, IdleChatterTimeMax, FOL_PreviousIdleChatterTimeMax, FOL_IdleChatterTimeMax) ; #DEBUG_LINE_NO:203
-    Self._SetIdleChatterTimeAV(ActorToSet, IdleChatterTimeMin, FOL_PreviousIdleChatterTimeMin, FOL_IdleChatterTimeMin) ; #DEBUG_LINE_NO:204
+Function SetIdleChatterTimes(Actor ActorToUpdate, Bool IsPet)
+  If (ActorToUpdate.HasKeyword(SQ_Followers_IdleChatterAllowed))
+    ;; This seems like a but I think there is a logic error here 
+  ElseIf (IsPet)
+    Self._SetIdleChatterTimeAV(ActorToUpdate, IdleChatterTimeMax, PET_PreviousIdleChatterTimeMax, PET_IdleChatterTimeMax)
+    Self._SetIdleChatterTimeAV(ActorToUpdate, IdleChatterTimeMin, PET_PreviousIdleChatterTimeMin, PET_IdleChatterTimeMin)
   Else
-    Self._RestoreIdleChatterTimeAV(ActorToSet, IdleChatterTimeMax, FOL_PreviousIdleChatterTimeMax) ; #DEBUG_LINE_NO:206
-    Self._RestoreIdleChatterTimeAV(ActorToSet, IdleChatterTimeMin, FOL_PreviousIdleChatterTimeMin) ; #DEBUG_LINE_NO:207
+    Self._RestoreIdleChatterTimeAV(ActorToUpdate, IdleChatterTimeMax, PET_PreviousIdleChatterTimeMax)
+    Self._RestoreIdleChatterTimeAV(ActorToUpdate, IdleChatterTimeMin, PET_PreviousIdleChatterTimeMin)
   EndIf
 EndFunction
 
-Function _SetIdleChatterTimeAV(Actor ActorToSet, ActorValue IdleChatterTimeAV, ActorValue PreviousIdleChatterTimeAV, GlobalVariable TargetIdleChatterTime)
-  Float currentVal = ActorToSet.GetValue(IdleChatterTimeAV) ; #DEBUG_LINE_NO:213
-  Float targetVal = TargetIdleChatterTime.GetValue() ; #DEBUG_LINE_NO:214
-  If currentVal != targetVal ; #DEBUG_LINE_NO:217
-    ActorToSet.SetValue(PreviousIdleChatterTimeAV, currentVal) ; #DEBUG_LINE_NO:219
-    ActorToSet.SetValue(IdleChatterTimeAV, targetVal) ; #DEBUG_LINE_NO:221
+Function _SetIdleChatterTimeAV(Actor ActorToUpdate, ActorValue IdleChatterTimeAV, ActorValue PreviousIdleChatterTimeAV, GlobalVariable TargetIdleChatterTime)
+  Float currentVal = ActorToUpdate.GetValue(IdleChatterTimeAV)
+  Float targetVal = TargetIdleChatterTime.GetValue()
+  If (currentVal != targetVal)
+    ActorToUpdate.SetValue(PreviousIdleChatterTimeAV, currentVal)
+    ActorToUpdate.SetValue(IdleChatterTimeAV, targetVal)
   EndIf
 EndFunction
 
-Function _RestoreIdleChatterTimeAV(Actor ActorToSet, ActorValue IdleChatterTimeAV, ActorValue PreviousIdleChatterTimeAV)
-  Float targetVal = ActorToSet.GetValue(PreviousIdleChatterTimeAV) ; #DEBUG_LINE_NO:227
-  ActorToSet.SetValue(IdleChatterTimeAV, targetVal) ; #DEBUG_LINE_NO:230
+Function _RestoreIdleChatterTimeAV(Actor ActorToUpdate, ActorValue IdleChatterTimeAV, ActorValue PreviousIdleChatterTimeAV)
+  Float targetVal = ActorToUpdate.GetValue(PreviousIdleChatterTimeAV)
+  ActorToUpdate.SetValue(IdleChatterTimeAV, targetVal)
 EndFunction
 
-Function CommandFollow(Actor Follower)
-  Follower.SetLinkedRef(None, SQ_Followers_Link_WaitAtRef, True) ; #DEBUG_LINE_NO:244
-  Follower.SetValue(PetState, iFollower_Com_Follow.GetValue()) ; #DEBUG_LINE_NO:246
-  Follower.EvaluatePackage(False) ; #DEBUG_LINE_NO:247
-  Self.TriggerTrackingGlobalsAndObjectivesUpdate() ; #DEBUG_LINE_NO:248
+Function CommandFollow(Actor Pet)
+  Pet.SetLinkedRef(None, SQ_Followers_Link_WaitAtRef, True)
+  Pet.SetValue(PetState, iFollower_Com_Follow.GetValue())
+  Pet.EvaluatePackage(False)
+  Self.TriggerTrackingGlobalsAndObjectivesUpdate()
 EndFunction
 
-Function CommandWait(Actor Follower, ObjectReference WaitAtRef)
-  If WaitAtRef ; #DEBUG_LINE_NO:255
-    Follower.SetLinkedRef(WaitAtRef, SQ_Followers_Link_WaitAtRef, True) ; #DEBUG_LINE_NO:256
+Function CommandWait(Actor Pet, ObjectReference WaitAtRef)
+  If (WaitAtRef)
+    Pet.SetLinkedRef(WaitAtRef, SQ_Followers_Link_WaitAtRef, True)
   EndIf
-  Follower.SetValue(PetState, iFollower_Com_Wait.GetValue()) ; #DEBUG_LINE_NO:259
-  Follower.EvaluatePackage(False) ; #DEBUG_LINE_NO:260
-  If Follower.IsInScene() == False && Follower.IsInCombat() == False ; #DEBUG_LINE_NO:262
-    Float waitTime = 0.5 ; #DEBUG_LINE_NO:264
-    Float timeWaiting = 0.0 ; #DEBUG_LINE_NO:265
-    Float maxWaitTimeBeforeBailout = 10.0 ; #DEBUG_LINE_NO:266
-    While Follower.GetCurrentPackage() != SQ_Followers_Wait && timeWaiting <= maxWaitTimeBeforeBailout ; #DEBUG_LINE_NO:267
-      Utility.Wait(waitTime) ; #DEBUG_LINE_NO:268
-      timeWaiting += waitTime ; #DEBUG_LINE_NO:269
+  Pet.SetValue(PetState, iFollower_Com_Wait.GetValue())
+  Pet.EvaluatePackage(False)
+  If (Pet.IsInScene() == False && Pet.IsInCombat() == False)
+    Float waitTime = 0.5
+    Float timeWaiting = 0.0
+    Float maxWaitTimeBeforeBailout = 10.0
+    While (Pet.GetCurrentPackage() != SQ_Pets_Wait && timeWaiting <= maxWaitTimeBeforeBailout)
+      Utility.Wait(waitTime)
+      timeWaiting += waitTime
     EndWhile
   EndIf
-  Self.TriggerTrackingGlobalsAndObjectivesUpdate() ; #DEBUG_LINE_NO:273
+  Self.TriggerTrackingGlobalsAndObjectivesUpdate()
 EndFunction
 
-Bool Function IsFollowing(Actor FollowerToTest)
-  Return FollowerToTest.GetValue(PetState) == iFollower_Com_Follow.GetValue() ; #DEBUG_LINE_NO:277
+Bool Function IsFollowing(Actor PetToTest)
+  Return (PetToTest.GetValue(PetState) == iFollower_Com_Follow.GetValue())
 EndFunction
 
-Bool Function IsWaiting(Actor FollowerToTest)
-  Return FollowerToTest.GetValue(PetState) == iFollower_Com_Wait.GetValue() ; #DEBUG_LINE_NO:281
+Bool Function IsWaiting(Actor PetToTest)
+  Return (PetToTest.GetValue(PetState) == iFollower_Com_Wait.GetValue())
 EndFunction
 
-Function UpdateRetrieveWaitingFollowersObjective(Actor[] ActiveFollowersArray)
-  If ActiveFollowersArray == None ; #DEBUG_LINE_NO:288
-    ActiveFollowersArray = Self.GetFollowers(True, True) ; #DEBUG_LINE_NO:289
+Function UpdateRetrieveWaitingPetsObjective(Actor[] ActivePetsArray)
+  If (ActivePetsArray == None)
+    ActivePetsArray = Self.GetPets(True, True)
   EndIf
-  Bool turnOnObjective = False ; #DEBUG_LINE_NO:293
-  Int I = 0 ; #DEBUG_LINE_NO:295
-  While turnOnObjective == False && I < ActiveFollowersArray.Length ; #DEBUG_LINE_NO:296
-    turnOnObjective = ActiveFollowersArray[I].GetValue(PetState) == iFollower_Com_Wait.GetValue() ; #DEBUG_LINE_NO:297
-    I += 1 ; #DEBUG_LINE_NO:298
+  Bool turnOnObjective = False
+  Int I = 0
+  While (turnOnObjective == False && I < ActivePetsArray.Length)
+    turnOnObjective = ActivePetsArray[I].GetValue(PetState) == iFollower_Com_Wait.GetValue()
+    I += 1
   EndWhile
-  If turnOnObjective ; #DEBUG_LINE_NO:303
-    If SkipNextWaitingFollowersObjective > 0 ; #DEBUG_LINE_NO:305
-      SkipNextWaitingFollowersObjective -= 1 ; #DEBUG_LINE_NO:306
+  If (turnOnObjective)
+    If (SkipNextWaitingPetObjective > 0)
+      SkipNextWaitingPetObjective -= 1
     Else
-      Self.SetObjectiveActive(ObjectiveRetrieveWaitingFollowers, True) ; #DEBUG_LINE_NO:308
+      Self.SetObjectiveActive(ObjectiveRetrieveWaitingPets, True)
     EndIf
   Else
-    Self.SetObjectiveDisplayed(ObjectiveRetrieveWaitingFollowers, False, False) ; #DEBUG_LINE_NO:311
+    Self.SetObjectiveDisplayed(ObjectiveRetrieveWaitingPets, False, False)
   EndIf
 EndFunction
 
-Actor[] Function GetFollowers(Bool IncludeFollowingFollowers, Bool IncludeWaitingFollowers)
-  Actor[] ActiveFollowersArray = (Alias_Active as RefCollectionAlias).GetArray() as Actor[] ; #DEBUG_LINE_NO:323
-  Actor[] followersToReturn = new Actor[0] ; #DEBUG_LINE_NO:326
-  Int I = 0 ; #DEBUG_LINE_NO:328
-  While I < ActiveFollowersArray.Length ; #DEBUG_LINE_NO:329
-    Actor currentFollower = ActiveFollowersArray[I] ; #DEBUG_LINE_NO:330
-    If IncludeFollowingFollowers && Self.IsFollowing(currentFollower) || IncludeWaitingFollowers && Self.IsWaiting(currentFollower) ; #DEBUG_LINE_NO:332
-      followersToReturn.add(currentFollower, 1) ; #DEBUG_LINE_NO:333
+Actor[] Function GetPets(Bool IncludeFollowingPets, Bool IncludeWaitingPets)
+  Actor[] ActivePetsArray = (Alias_Active as RefCollectionAlias).GetArray() as Actor[]
+  Actor[] followersToReturn = new Actor[0]
+  Int I = 0
+  While (I < ActivePetsArray.Length)
+    Actor currentPet = ActivePetsArray[I]
+    If (IncludeFollowingPets && Self.IsFollowing(currentPet) || IncludeWaitingPets && Self.IsWaiting(currentPet))
+      followersToReturn.add(currentPet, 1)
     EndIf
-    I += 1 ; #DEBUG_LINE_NO:336
+    I += 1
   EndWhile
-  Return followersToReturn ; #DEBUG_LINE_NO:340
+  Return followersToReturn
 EndFunction
 
-Actor[] Function AllFollowersWait(ObjectReference WaitAtRef, Bool IgnoreCurrentlyWaitingFollowers, Bool SkipWaitingFollowersObjective)
-  If SkipWaitingFollowersObjective ; #DEBUG_LINE_NO:348
-    SkipNextWaitingFollowersObjective += 1 ; #DEBUG_LINE_NO:349
+Actor[] Function AllPetsWait(ObjectReference WaitAtRef, Bool IgnoreCurrentlyWaitingPets, Bool SkipWaitingPetsObjective)
+  If (SkipWaitingPetsObjective)
+    SkipNextWaitingPetObjective += 1
   EndIf
-  Actor[] ActiveFollowersArray = (Alias_Active as RefCollectionAlias).GetArray() as Actor[] ; #DEBUG_LINE_NO:352
-  Actor[] commandedFollowers = new Actor[0] ; #DEBUG_LINE_NO:355
-  Int I = 0 ; #DEBUG_LINE_NO:357
-  While I < ActiveFollowersArray.Length ; #DEBUG_LINE_NO:358
-    Actor currentActor = ActiveFollowersArray[I] ; #DEBUG_LINE_NO:360
-    If IgnoreCurrentlyWaitingFollowers == False || Self.IsWaiting(currentActor) == False ; #DEBUG_LINE_NO:362
-      Self.CommandWait(currentActor, WaitAtRef) ; #DEBUG_LINE_NO:363
-      commandedFollowers.add(currentActor, 1) ; #DEBUG_LINE_NO:364
+  Actor[] ActivePetsArray = (Alias_Active as RefCollectionAlias).GetArray() as Actor[]
+  Actor[] commandedPets = new Actor[0]
+  Int I = 0
+  While (I < ActivePetsArray.Length)
+    Actor currentActor = ActivePetsArray[I]
+    If (IgnoreCurrentlyWaitingPets == False || Self.IsWaiting(currentActor) == False)
+      Self.CommandWait(currentActor, WaitAtRef)
+      commandedPets.add(currentActor, 1)
     EndIf
-    I += 1 ; #DEBUG_LINE_NO:366
+    I += 1
   EndWhile
-  Return commandedFollowers ; #DEBUG_LINE_NO:370
+  Return commandedPets
 EndFunction
 
-Function AllFollowersFollow(Actor[] SpecificFollowersToCommand)
-  Actor[] ActiveFollowersArray = (Alias_Active as RefCollectionAlias).GetArray() as Actor[] ; #DEBUG_LINE_NO:379
-  If SpecificFollowersToCommand == None ; #DEBUG_LINE_NO:382
-    SpecificFollowersToCommand = ActiveFollowersArray ; #DEBUG_LINE_NO:383
+Function AllPetsFollow(Actor[] SpecificPetsToCommand)
+  Actor[] ActivePetsArray = (Alias_Active as RefCollectionAlias).GetArray() as Actor[]
+  If (SpecificPetsToCommand == None)
+    SpecificPetsToCommand = ActivePetsArray
   EndIf
-  Int I = 0 ; #DEBUG_LINE_NO:386
-  While I < SpecificFollowersToCommand.Length ; #DEBUG_LINE_NO:387
-    Self.CommandFollow(SpecificFollowersToCommand[I]) ; #DEBUG_LINE_NO:388
-    I += 1 ; #DEBUG_LINE_NO:389
+  Int I = 0
+  While I < SpecificPetsToCommand.Length
+    Self.CommandFollow(SpecificPetsToCommand[I])
+    I += 1
   EndWhile
-  Self.TriggerTrackingGlobalsAndObjectivesUpdate() ; #DEBUG_LINE_NO:392
+  Self.TriggerTrackingGlobalsAndObjectivesUpdate()
 EndFunction
 
 Function UpdateTrackingGlobalsAndObjectives()
-  Actor[] ActiveFollowersArray = Self.GetFollowers(True, True) ; #DEBUG_LINE_NO:403
-  Self.UpdateRetrieveWaitingFollowersObjective(ActiveFollowersArray) ; #DEBUG_LINE_NO:407
-  Int followerCount = ActiveFollowersArray.Length ; #DEBUG_LINE_NO:410
-  PlayerFollowers_Count.SetValueInt(followerCount) ; #DEBUG_LINE_NO:411
-  If followerCount > 0 ; #DEBUG_LINE_NO:413
-    PlayerFollowers_HasFollower.SetValueInt(1) ; #DEBUG_LINE_NO:414
+  Actor[] ActivePetsArray = Self.GetPets(True, True)
+  Self.UpdateRetrieveWaitingPetsObjective(ActivePetsArray)
+
+  Int followerCount = ActivePetsArray.Length
+  PlayerPets_Count.SetValueInt(followerCount)
+  If (followerCount > 0)
+    PlayerPets_HasPet.SetValueInt(1)
   Else
-    PlayerFollowers_HasFollower.SetValueInt(0) ; #DEBUG_LINE_NO:416
+    PlayerPets_HasPet.SetValueInt(0)
   EndIf
-  Int followerCountFollowing = 0 ; #DEBUG_LINE_NO:419
-  Int followerCountWaiting = 0 ; #DEBUG_LINE_NO:420
-  Bool hasCompanion = False ; #DEBUG_LINE_NO:422
-  Int companionCountFollowing = 0 ; #DEBUG_LINE_NO:423
-  Int companionCountWaiting = 0 ; #DEBUG_LINE_NO:424
-  Int iWait = iFollower_Com_Wait.GetValue() as Int ; #DEBUG_LINE_NO:426
-  Int I = 0 ; #DEBUG_LINE_NO:428
-  While I < ActiveFollowersArray.Length ; #DEBUG_LINE_NO:429
-    Actor currentFollower = ActiveFollowersArray[I] ; #DEBUG_LINE_NO:430
-    If currentFollower.GetValue(PetState) == iWait as Float ; #DEBUG_LINE_NO:432
-      followerCountWaiting += 1 ; #DEBUG_LINE_NO:433
-      If currentFollower is companionactorscript ; #DEBUG_LINE_NO:435
-        companionCountWaiting += 1 ; #DEBUG_LINE_NO:436
-        hasCompanion = True ; #DEBUG_LINE_NO:437
-      EndIf
+
+  Int petCountFollowing = 0
+  Int petCountWaiting = 0
+  Int iWait = iFollower_Com_Wait.GetValue() as Int
+  Int I = 0
+  While I < ActivePetsArray.Length
+    Actor currentPet = ActivePetsArray[I]
+    If (currentPet.GetValue(PetState) == iWait as Float)
+      petCountWaiting += 1
     Else
-      followerCountFollowing += 1 ; #DEBUG_LINE_NO:441
-      If currentFollower is companionactorscript ; #DEBUG_LINE_NO:443
-        companionCountFollowing += 1 ; #DEBUG_LINE_NO:444
-        hasCompanion = True ; #DEBUG_LINE_NO:445
-      EndIf
+      petCountFollowing += 1
     EndIf
-    I += 1 ; #DEBUG_LINE_NO:450
+    I += 1
   EndWhile
-  If followerCountFollowing > 0 ; #DEBUG_LINE_NO:455
-    PlayerFollowers_HasFollowerFollowing.SetValueInt(1) ; #DEBUG_LINE_NO:456
+
+  If (petCountFollowing > 0)
+    PlayerPets_HasPetFollowing.SetValueInt(1)
   Else
-    PlayerFollowers_HasFollowerFollowing.SetValueInt(0) ; #DEBUG_LINE_NO:458
+    PlayerPets_HasPetFollowing.SetValueInt(0)
   EndIf
-  If followerCountWaiting > 0 ; #DEBUG_LINE_NO:461
-    PlayerFollowers_HasFollowerWaiting.SetValueInt(1) ; #DEBUG_LINE_NO:462
+  PlayerPets_CountFollowing.SetValueInt(petCountFollowing)
+
+  If petCountWaiting > 0
+    PlayerPets_HasPetWaiting.SetValueInt(1)
   Else
-    PlayerFollowers_HasFollowerWaiting.SetValueInt(0) ; #DEBUG_LINE_NO:464
+    PlayerPets_HasPetWaiting.SetValueInt(0)
   EndIf
-  PlayerFollowers_CountFollowing.SetValueInt(followerCountFollowing) ; #DEBUG_LINE_NO:467
-  PlayerFollowers_CountWaiting.SetValueInt(followerCountWaiting) ; #DEBUG_LINE_NO:468
-  If hasCompanion ; #DEBUG_LINE_NO:472
-    PlayerFollowers_HasCompanion.SetValue(1.0) ; #DEBUG_LINE_NO:473
-  Else
-    PlayerFollowers_HasCompanion.SetValue(0.0) ; #DEBUG_LINE_NO:475
-  EndIf
-  If companionCountFollowing > 0 ; #DEBUG_LINE_NO:478
-    PlayerFollowers_HasCompanionFollowing.SetValueInt(1) ; #DEBUG_LINE_NO:479
-  Else
-    PlayerFollowers_HasCompanionFollowing.SetValueInt(0) ; #DEBUG_LINE_NO:481
-  EndIf
-  If companionCountWaiting > 0 ; #DEBUG_LINE_NO:484
-    PlayerFollowers_HasCompanionWaiting.SetValueInt(1) ; #DEBUG_LINE_NO:485
-  Else
-    PlayerFollowers_HasCompanionWaiting.SetValueInt(0) ; #DEBUG_LINE_NO:487
-  EndIf
+  PlayerPets_CountWaiting.SetValueInt(petCountWaiting)
 EndFunction
 
-Actor[] Function TeleportFollowers(ObjectReference DestinationRef, Actor[] SpecificFollowersToTeleport, Bool IncludeFollowingFollowers, Bool IncludeWaitingFollowers, Bool StartFollowingAfterTeleport, Bool StartWaitingAfterTeleport, Bool SkipWaitingFollowersObjective)
-  If SpecificFollowersToTeleport == None ; #DEBUG_LINE_NO:497
-    SpecificFollowersToTeleport = (Alias_Active as RefCollectionAlias).GetActorArray() ; #DEBUG_LINE_NO:498
+Actor[] Function TeleportPets(ObjectReference DestinationRef, Actor[] SpecificPetsToTeleport, Bool IncludeFollowingPets, Bool IncludeWaitingPets, Bool StartFollowingAfterTeleport, Bool StartWaitingAfterTeleport, Bool SkipWaitingPetsObjective)
+  If (SpecificPetsToTeleport == None)
+    SpecificPetsToTeleport = (Alias_Active as RefCollectionAlias).GetActorArray()
   EndIf
-  If DestinationRef == None ; #DEBUG_LINE_NO:501
-    DestinationRef = PlayerRef as ObjectReference ; #DEBUG_LINE_NO:502
+
+  If (DestinationRef == None)
+    DestinationRef = PlayerRef as ObjectReference
   EndIf
-  Actor[] teleportedActors = new Actor[0] ; #DEBUG_LINE_NO:505
-  Int I = 0 ; #DEBUG_LINE_NO:507
-  While I < SpecificFollowersToTeleport.Length ; #DEBUG_LINE_NO:508
-    Actor currentActor = SpecificFollowersToTeleport[I] ; #DEBUG_LINE_NO:509
-    Bool shouldTeleport = IncludeFollowingFollowers && Self.IsFollowing(currentActor) || IncludeWaitingFollowers && Self.IsWaiting(currentActor) ; #DEBUG_LINE_NO:513
-    If shouldTeleport ; #DEBUG_LINE_NO:515
-      If StartFollowingAfterTeleport ; #DEBUG_LINE_NO:516
-        Self.CommandFollow(currentActor) ; #DEBUG_LINE_NO:518
-      ElseIf StartWaitingAfterTeleport
-        If SkipWaitingFollowersObjective ; #DEBUG_LINE_NO:521
-          SkipNextWaitingFollowersObjective += 1 ; #DEBUG_LINE_NO:522
+
+  Actor[] teleportedActors = new Actor[0]
+  Int I = 0
+  While (I < SpecificPetsToTeleport.Length)
+    Actor currentActor = SpecificPetsToTeleport[I]
+    Bool shouldTeleport = IncludeFollowingPets && Self.IsFollowing(currentActor) || IncludeWaitingPets && Self.IsWaiting(currentActor)
+    If (shouldTeleport)
+      If (StartFollowingAfterTeleport)
+        Self.CommandFollow(currentActor)
+      ElseIf (StartWaitingAfterTeleport)
+        If (SkipWaitingPetsObjective)
+          SkipNextWaitingPetObjective += 1
         EndIf
-        If DestinationRef != PlayerRef as ObjectReference ; #DEBUG_LINE_NO:525
-          Self.CommandWait(currentActor, DestinationRef) ; #DEBUG_LINE_NO:526
+        If (DestinationRef != PlayerRef as ObjectReference)
+          Self.CommandWait(currentActor, DestinationRef)
         Else
-          Self.CommandWait(currentActor, None) ; #DEBUG_LINE_NO:528
+          Self.CommandWait(currentActor, None)
         EndIf
       EndIf
-      currentActor.MoveTo(DestinationRef, 0.0, 0.0, 0.0, True, False) ; #DEBUG_LINE_NO:533
-      teleportedActors.add(currentActor, 1) ; #DEBUG_LINE_NO:534
+      currentActor.MoveTo(DestinationRef, 0.0, 0.0, 0.0, True, False)
+      teleportedActors.add(currentActor, 1)
     EndIf
-    I += 1 ; #DEBUG_LINE_NO:537
+    I += 1
   EndWhile
-  Return teleportedActors ; #DEBUG_LINE_NO:541
-EndFunction
-
-Function DebugFollower(Actor Follower)
-  Self.SetRoleActive(Follower, True, True, 0.0, 0.0) ; #DEBUG_LINE_NO:550
-  Follower.MoveTo(PlayerRef as ObjectReference, 0.0, 0.0, 0.0, True, False) ; #DEBUG_LINE_NO:551
-EndFunction
-
-SQ_FollowersScript Function GetScript() Global
-  Return (Game.GetFormFromFile(55155, "Starfield.esm") as Quest) as SQ_FollowersScript ; #DEBUG_LINE_NO:558
+  Return teleportedActors
 EndFunction

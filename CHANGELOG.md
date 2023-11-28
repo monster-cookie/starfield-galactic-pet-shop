@@ -1,5 +1,8 @@
 # V1.0 Permutations
 
+## V1.0.5
+* You can now have your pets follow you anywhere and have them stop following you if you desire. They are still immortal non-combat pets. THe CCT system used as the basis for this has odd weapon attachments driven through a funk omod template. I'm still trying to figure a way around it to give them fighting abilities. 
+
 ## V1.0.4
 * Missed back to 100% on the scale menu
 
