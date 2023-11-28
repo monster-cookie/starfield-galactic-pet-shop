@@ -36,7 +36,7 @@ Keyword Property PETBED_HAS_OWNER Auto Const Mandatory
 ActorBase Property PET_TYPE Auto Const mandatory
 FormList Property ActivePetsList Auto Const mandatory
 Keyword Property CCT_Instance_Name_Flyer Auto Const Mandatory
-
+SQ_PetsScript Property SQ_Pets Auto Const mandatory
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -98,6 +98,16 @@ Function ProcessMenu(Message message, Int menuButtonClicked, Bool menuActive)
         ;; CLICKED 3: Scale Pet
         VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 3 clicked - recall pet to bed.", 0, Venpi_DebugEnabled.GetValueInt())
         self.RecallPet()
+        menuActive = False
+      ElseIF (menuButtonClicked == 4) 
+        ;; CLICKED 4: Make active follower
+        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 4 clicked - make pet active follower.", 0, Venpi_DebugEnabled.GetValueInt())
+        self.FollowerPet()
+        menuActive = False
+      ElseIF (menuButtonClicked == 5) 
+        ;; CLICKED 5: Have pet stop following
+        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 5 clicked - stop pet following.", 0, Venpi_DebugEnabled.GetValueInt())
+        self.SandboxPet()
         menuActive = False
       EndIf
 
@@ -225,4 +235,18 @@ Function RecallPet()
   Else
     myPet.MoveTo(self, 0, -1.5, 0, True, True)
   EndIf
+EndFunction
+
+Function FollowerPet()
+  VPI_Debug.DebugMessage("PetKioskScript", "FollowerPet", "Making pet a follower", 0, Venpi_DebugEnabled.GetValueInt())
+  Actor pet = myPet.GetSelfAsActor()
+  SQ_Pets.SetRoleActive(pet, True, True, 0.0, 0.0)
+  Actor playerRef = Game.GetPlayer()
+  myPet.MoveTo(playerRef as ObjectReference, 0.0, 0.0, 0.0, True, False)
+EndFunction
+
+Function SandboxPet()
+  VPI_Debug.DebugMessage("PetKioskScript", "SandboxPet", "Releasing per from following player", 0, Venpi_DebugEnabled.GetValueInt())
+  Actor pet = myPet.GetSelfAsActor()
+  SQ_Pets.SetRoleInactive(pet, True, False, False)
 EndFunction
