@@ -18,7 +18,6 @@ ScriptName PetBedScript Extends ObjectReference
 ;;; Global Variables
 ;;;
 GlobalVariable Property Venpi_DebugEnabled Auto Const Mandatory
-GlobalVariable Property MAX_PETS Auto Const Mandatory
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -27,7 +26,6 @@ GlobalVariable Property MAX_PETS Auto Const Mandatory
 Message Property PET_MENU_NOTOWNED Auto Const mandatory
 Message Property PET_MENU_OWNED Auto Const mandatory
 Message Property PET_MENU_OWNED_SCALING Auto Const mandatory
-Message Property FAILED_MAX_PETS Auto Const mandatory
 Message Property FAILED_PETBED_OWNED Auto Const mandatory
 Message Property FAILED_PETBED_NOT_OWNED Auto Const mandatory
 Message Property FAILED_NOT_IMPLEMENTED Auto Const mandatory
@@ -180,11 +178,7 @@ Function ProcessMenu(Message message, Int menuButtonClicked, Bool menuActive)
 EndFunction
 
 Function SummonPet()
-  If (ActivePetsList.GetSize() + 1 > MAX_PETS.GetValueInt())
-    VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Failed to deploy pet, the max number of pets limit has been reached.", 0, Venpi_DebugEnabled.GetValueInt())
-    FAILED_MAX_PETS.show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    Return
-  ElseIF (self.HasKeyword(PETBED_HAS_OWNER))
+  IF (self.HasKeyword(PETBED_HAS_OWNER))
     VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Failed to deploy pet, I already have a pet allocated.", 0, Venpi_DebugEnabled.GetValueInt())
     FAILED_PETBED_OWNED.show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
     Return
@@ -221,8 +215,9 @@ Function ScalePet(Float scale)
 EndFunction
 
 Function ReleasePet()
-  VPI_Debug.DebugMessage("PetKioskScript", "ReleasePet", "NOT IMPLEMENTED", 0, Venpi_DebugEnabled.GetValueInt())
-  FAILED_NOT_IMPLEMENTED.show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+  VPI_Debug.DebugMessage("PetKioskScript", "ReleasePet", "Releasing pet", 0, Venpi_DebugEnabled.GetValueInt())
+  myPet.Disable(False)
+  myPet.Delete()
 EndFunction
 
 Function RecallPet()

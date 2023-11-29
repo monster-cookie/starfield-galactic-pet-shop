@@ -1,5 +1,9 @@
 # V1.0 Permutations
 
+## V1.0.6
+* Removing MAX_PETS lock it doesn't work well even if you use the decorator to remove the pet bed. I think there might be a engine bug in play too cause we are putting the decorator other places. 
+* Due to AI performance I recommend no more them 2-3 pets in an house, outpost, or ship. 
+
 ## V1.0.5
 * You can now have your pets follow you anywhere and have them stop following you if you desire. They are still immortal non-combat pets. THe CCT system used as the basis for this has odd weapon attachments driven through a funk omod template. I'm still trying to figure a way around it to give them fighting abilities. 
 * New options on the owned pet management pet screen control the follower state. 
