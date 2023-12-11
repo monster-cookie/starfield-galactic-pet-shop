@@ -41,6 +41,9 @@ mkdir "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA
 copy /y "D:\MO2Staging\Starfield\mods\GalacticPetShop-Experimental\GalacticPetShop.esm" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\ESM"
 copy /y "D:\MO2Staging\Starfield\mods\GalacticPetShop-Experimental\GalacticPetShop.esm" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist"
 
+@REM Use Spriggit to extract record from ESM
+"D:\Program Files\Spriggit\Spriggit.CLI.exe" serialize --InputPath "D:\MO2Staging\Starfield\mods\GalacticPetShop-Experimental\GalacticPetShop.esm" --OutputPath "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\ESM-Extracted" --GameRelease Starfield --PackageName Spriggit.Yaml
+
 @REM Create and copy the BA2 Textures Archive to Dist folder
 @REM @echo "Creating the BA2 Textures Archive"
 @REM "D:\Program Files\xEdit\BSArch64.exe" pack "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Textures" "GalacticPetShop - Textures.ba2" -sf1dds -mt && (

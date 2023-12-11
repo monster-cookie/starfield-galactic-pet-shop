@@ -18,6 +18,7 @@ ScriptName PetBedScript Extends ObjectReference
 ;;; Global Variables
 ;;;
 GlobalVariable Property Venpi_DebugEnabled Auto Const Mandatory
+String Property Venpi_ModName Auto Const Mandatory
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
@@ -71,7 +72,7 @@ Function ProcessMenu(Message message, Int menuButtonClicked, Bool menuActive)
         menuActive = False
       ElseIf (menuButtonClicked == 1)
         ;; CLICKED 1: Call Pet
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_NOTOWNED Button 1 clicked - call pet.", 0, Venpi_DebugEnabled.GetValueInt())
+        VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ProcessMenu", "PET_MENU_NOTOWNED Button 1 clicked - call pet.", 0, Venpi_DebugEnabled.GetValueInt())
         self.SummonPet()
         menuActive = False
       EndIf
@@ -85,26 +86,26 @@ Function ProcessMenu(Message message, Int menuButtonClicked, Bool menuActive)
         menuActive = False
       ElseIf (menuButtonClicked == 1)
         ;; CLICKED 1: Release Pet
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 1 clicked - release pet.", 0, Venpi_DebugEnabled.GetValueInt())
+        VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 1 clicked - release pet.", 0, Venpi_DebugEnabled.GetValueInt())
         self.ReleasePet()
         menuActive = False
       ElseIF (menuButtonClicked == 2) 
         ;; CLICKED 2: Scale Pet
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 2 clicked - scale pet.", 0, Venpi_DebugEnabled.GetValueInt())
+        VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 2 clicked - scale pet.", 0, Venpi_DebugEnabled.GetValueInt())
         message = PET_MENU_OWNED_SCALING
       ElseIF (menuButtonClicked == 3) 
         ;; CLICKED 3: Scale Pet
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 3 clicked - recall pet to bed.", 0, Venpi_DebugEnabled.GetValueInt())
+        VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 3 clicked - recall pet to bed.", 0, Venpi_DebugEnabled.GetValueInt())
         self.RecallPet()
         menuActive = False
       ElseIF (menuButtonClicked == 4) 
         ;; CLICKED 4: Make active follower
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 4 clicked - make pet active follower.", 0, Venpi_DebugEnabled.GetValueInt())
+        VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 4 clicked - make pet active follower.", 0, Venpi_DebugEnabled.GetValueInt())
         self.FollowerPet()
         menuActive = False
       ElseIF (menuButtonClicked == 5) 
         ;; CLICKED 5: Have pet stop following
-        VPI_Debug.DebugMessage("PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 5 clicked - stop pet following.", 0, Venpi_DebugEnabled.GetValueInt())
+        VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ProcessMenu", "PET_MENU_OWNED Button 5 clicked - stop pet following.", 0, Venpi_DebugEnabled.GetValueInt())
         self.SandboxPet()
         menuActive = False
       EndIf
@@ -179,16 +180,16 @@ EndFunction
 
 Function SummonPet()
   IF (self.HasKeyword(PETBED_HAS_OWNER))
-    VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Failed to deploy pet, I already have a pet allocated.", 0, Venpi_DebugEnabled.GetValueInt())
+    VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "SummonPet", "Failed to deploy pet, I already have a pet allocated.", 0, Venpi_DebugEnabled.GetValueInt())
     FAILED_PETBED_OWNED.show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
     Return
   Else
-    VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Releasing a new pet of type " + PET_TYPE + ".", 0, Venpi_DebugEnabled.GetValueInt())
+    VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "SummonPet", "Releasing a new pet of type " + PET_TYPE + ".", 0, Venpi_DebugEnabled.GetValueInt())
     Float[] offset = new Float[3]
 
     if (PET_TYPE.HasKeyword(CCT_Instance_Name_Flyer))
       ;; PET is a flyer and needs z axis increased by 1.5
-      VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Pet is a flyer adjusting coords(x, y, z) to 0, -1.5, 1.5.", 0, Venpi_DebugEnabled.GetValueInt())
+      VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "SummonPet", "Pet is a flyer adjusting coords(x, y, z) to 0, -1.5, 1.5.", 0, Venpi_DebugEnabled.GetValueInt())
       offset[0] = 1.5
       offset[1] = -1.5
       offset[2] = 0
@@ -207,7 +208,7 @@ EndFunction
 
 Function ScalePet(Float scale)
   If (myPet == None || self.HasKeyword(PETBED_HAS_OWNER) == False)
-    VPI_Debug.DebugMessage("PetKioskScript", "ScalePet", "Scale pet failed pet is null or pet bed is not owned", 0, Venpi_DebugEnabled.GetValueInt())
+    VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ScalePet", "Scale pet failed pet is null or pet bed is not owned", 0, Venpi_DebugEnabled.GetValueInt())
     FAILED_PETBED_NOT_OWNED.show(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
     Return
   EndIf
@@ -215,17 +216,17 @@ Function ScalePet(Float scale)
 EndFunction
 
 Function ReleasePet()
-  VPI_Debug.DebugMessage("PetKioskScript", "ReleasePet", "Releasing pet", 0, Venpi_DebugEnabled.GetValueInt())
+  VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "ReleasePet", "Releasing pet", 0, Venpi_DebugEnabled.GetValueInt())
   myPet.Disable(False)
   myPet.Delete()
 EndFunction
 
 Function RecallPet()
-  VPI_Debug.DebugMessage("PetKioskScript", "RecallPet", "Moving pet back to the pet bed.", 0, Venpi_DebugEnabled.GetValueInt())
+  VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "RecallPet", "Moving pet back to the pet bed.", 0, Venpi_DebugEnabled.GetValueInt())
 
   if (PET_TYPE.HasKeyword(CCT_Instance_Name_Flyer))
     ;; PET is a flyer and needs z axis increased by 1.5
-    VPI_Debug.DebugMessage("PetKioskScript", "SummonPet", "Pet is a flyer adjusting recall coords(x, y, z) to 0, -1.5, 1.5.", 0, Venpi_DebugEnabled.GetValueInt())
+    VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "SummonPet", "Pet is a flyer adjusting recall coords(x, y, z) to 0, -1.5, 1.5.", 0, Venpi_DebugEnabled.GetValueInt())
     myPet.MoveTo(self, 0, -1.5, 1.5, True, True)
   Else
     myPet.MoveTo(self, 0, -1.5, 0, True, True)
@@ -233,7 +234,7 @@ Function RecallPet()
 EndFunction
 
 Function FollowerPet()
-  VPI_Debug.DebugMessage("PetKioskScript", "FollowerPet", "Making pet a follower", 0, Venpi_DebugEnabled.GetValueInt())
+  VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "FollowerPet", "Making pet a follower", 0, Venpi_DebugEnabled.GetValueInt())
   Actor pet = myPet.GetSelfAsActor()
   SQ_Pets.SetRoleActive(pet, True, True, 0.0, 0.0)
   Actor playerRef = Game.GetPlayer()
@@ -241,7 +242,7 @@ Function FollowerPet()
 EndFunction
 
 Function SandboxPet()
-  VPI_Debug.DebugMessage("PetKioskScript", "SandboxPet", "Releasing per from following player", 0, Venpi_DebugEnabled.GetValueInt())
+  VPI_Debug.DebugMessage(Venpi_ModName, "PetKioskScript", "SandboxPet", "Releasing per from following player", 0, Venpi_DebugEnabled.GetValueInt())
   Actor pet = myPet.GetSelfAsActor()
   SQ_Pets.SetRoleInactive(pet, True, False, False)
 EndFunction

@@ -1,5 +1,8 @@
 # V1.0 Permutations
 
+## V1.0.7
+* Now using user debug logs via Venpi Core v1.0.10
+
 ## V1.0.6
 * Removing MAX_PETS lock it doesn't work well even if you use the decorator to remove the pet bed. I think there might be a engine bug in play too cause we are putting the decorator other places. 
 * Due to AI performance I recommend no more them 2-3 pets in an house, outpost, or ship. 

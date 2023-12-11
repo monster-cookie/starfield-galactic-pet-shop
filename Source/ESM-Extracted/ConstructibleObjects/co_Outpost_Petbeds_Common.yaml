@@ -1,0 +1,25 @@
+FormKey: 000835:GalacticPetShop.esm
+EditorID: co_Outpost_Petbeds_Common
+Description:
+  TargetLanguage: English
+  Value: Common Pets
+WorkbenchKeyword: 293ADF:Starfield.esm
+ConstructableComponents:
+- Component: 00000F:Starfield.esm
+  Count: 25000
+- Component: 0057C7:Starfield.esm
+  Count: 4
+- Component: 0777E6:Starfield.esm
+  Count: 2
+- Component: 299544:Starfield.esm
+  Count: 1
+CreatedObject: 000837:GalacticPetShop.esm
+MenuSortOrder: 0.0111
+PickupSound:
+  Start: bede4929-b668-bf0b-452c-922b90a99bb6
+DropdownSound:
+  Start: e11a4631-24b0-6f2f-127b-c0b82195ab9d
+LearnMethod: DefaultOrConditions
+Categories:
+- 293ADF:Starfield.esm
+RECF: 0

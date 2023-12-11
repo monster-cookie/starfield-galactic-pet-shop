@@ -1,8 +1,18 @@
 ScriptName SQ_Pets_ActivePetsScript Extends RefCollectionAlias
-{ Script attached to ActivePets refcollection alias.
-Currently it is managing the COM_SandboxDistancePollSuccessful which is used to turn on/off the sandboxing while player is loitering }
 
-;-- Variables ---------------------------------------
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Global Variables
+;;;
+GlobalVariable Property Venpi_DebugEnabled Auto Const Mandatory
+String Property Venpi_ModName Auto Const Mandatory
+
+GlobalVariable Property COM_SandboxDistancePollSuccessful Auto Const mandatory
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Variables
+;;;
 Int PollSuccessCount
 Float PollSuccess_Distance = 5.0 Const
 Int PollSuccessesNeeded = 3 Const
@@ -13,12 +23,10 @@ Bool activePetsArrayLock
 Int iPollSuccess = 1 Const
 Int iPollUnsetOrNotYetSuccess = 0 Const
 
-;-- Properties --------------------------------------
-GlobalVariable Property COM_SandboxDistancePollSuccessful Auto Const mandatory
-{ Used to conditionalize sandbox package }
-
-;-- Functions ---------------------------------------
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Events
+;;;
 Event OnPackageChange(ObjectReference akSenderRef, Package akOldPackage)
   ; Empty function
 EndEvent
@@ -71,6 +79,10 @@ Event Actor.OnPlayerLoiteringEnd(Actor akSenderRef)
   Self.EvaluatePackageForAll()
 EndEvent
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Functions
+;;;
 Bool Function KeepPolling()
   While activePetsArrayLock
     Utility.Wait(0.100000001)
@@ -108,10 +120,11 @@ Function EvaluatePackageForAll()
 EndFunction
 
 Bool Function Trace(ScriptObject CallingObject, String asTextToPrint, Int aiSeverity, String MainLogName, String SubLogName, Bool bShowNormalTrace, Bool bShowWarning, Bool bPrefixTraceWithLogNames)
-  Return Debug.TraceLog(CallingObject, asTextToPrint, MainLogName, SubLogName, aiSeverity, bShowNormalTrace, bShowWarning, bPrefixTraceWithLogNames, True)
+  VPI_Debug.DebugMessage(Venpi_ModName, "SQ_Pets_ActivePetsScript", CallingObject, asTextToPrint, aiSeverity, Venpi_DebugEnabled.GetValueInt())
+  Return True
 EndFunction
 
-; Fixup hacks for debug-only function: warning
 Bool Function Warning(ScriptObject CallingObject, String asTextToPrint, Int aiSeverity, String MainLogName, String SubLogName, Bool bShowNormalTrace, Bool bShowWarning, Bool bPrefixTraceWithLogNames)
+  VPI_Debug.DebugMessage(Venpi_ModName, "SQ_Pets_ActivePetsScript", CallingObject, asTextToPrint, aiSeverity, Venpi_DebugEnabled.GetValueInt())
   Return false
 EndFunction

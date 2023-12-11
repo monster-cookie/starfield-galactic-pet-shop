@@ -1,0 +1,27 @@
+FormKey: 000839:GalacticPetShop.esm
+EditorID: co_Outpost_Petbeds_Rare
+Description:
+  TargetLanguage: English
+  Value: Rare Pets
+WorkbenchKeyword: 293ADF:Starfield.esm
+ConstructableComponents:
+- Component: 00000F:Starfield.esm
+  Count: 100000
+- Component: 0057C6:Starfield.esm
+  Count: 10
+- Component: 0777E6:Starfield.esm
+  Count: 10
+- Component: 077825:Starfield.esm
+  Count: 10
+- Component: 299544:Starfield.esm
+  Count: 4
+CreatedObject: 000838:GalacticPetShop.esm
+MenuSortOrder: 0.0122
+PickupSound:
+  Start: bede4929-b668-bf0b-452c-922b90a99bb6
+DropdownSound:
+  Start: e11a4631-24b0-6f2f-127b-c0b82195ab9d
+LearnMethod: DefaultOrConditions
+Categories:
+- 293ADF:Starfield.esm
+RECF: 0

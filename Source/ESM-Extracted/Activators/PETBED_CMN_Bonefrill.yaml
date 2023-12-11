@@ -1,0 +1,65 @@
+FormKey: 000858:GalacticPetShop.esm
+EditorID: PETBED_CMN_Bonefrill
+VirtualMachineAdapter:
+  Scripts:
+  - Name: PetBedScript
+    Properties:
+    - MutagenObjectType: ScriptObjectProperty
+      Name: ActivePetsList
+      Object: 00082B:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: CCT_Instance_Name_Flyer
+      Object: 1ED151:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: FAILED_NOT_IMPLEMENTED
+      Object: 000801:VenpiCore.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: FAILED_PETBED_NOT_OWNED
+      Object: 000842:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: FAILED_PETBED_OWNED
+      Object: 000832:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PETBED_HAS_OWNER
+      Object: 00082F:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PETBED_OWNED_MESG
+      Object: 000830:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_MENU_NOTOWNED
+      Object: 00082E:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_MENU_OWNED
+      Object: 000846:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_MENU_OWNED_SCALING
+      Object: 000847:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_TYPE
+      Object: 000857:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Pets
+      Object: 00085A:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: Venpi_DebugEnabled
+      Object: 000800:VenpiCore.esm
+    - MutagenObjectType: ScriptStringProperty
+      Name: Venpi_ModName
+      Data: GalacticPetShop
+ODTY: 0
+Name:
+  TargetLanguage: English
+  Value: Pet Bed - Bonefrill
+Model:
+  File: SetDressing\CreatureCages\CreatureCage_Sm01.nif
+Keywords:
+- 1D3029:Starfield.esm
+- 0A4822:Starfield.esm
+MarkerColor: '#00CC4C33'
+ActivateSound:
+  Start: 9eb8414f-af4f-09c7-ff97-132fabeacbad
+ActivateTextOverride:
+  TargetLanguage: English
+  Value: Manage Pet (Free)
+Flags: []
+ActivationAngle: 360

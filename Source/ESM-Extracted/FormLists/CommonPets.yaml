@@ -1,0 +1,12 @@
+FormKey: 000837:GalacticPetShop.esm
+EditorID: CommonPets
+Name:
+  TargetLanguage: English
+  Value: Pets - Common
+Items:
+- 000836:GalacticPetShop.esm
+- 00082C:GalacticPetShop.esm
+- 00083A:GalacticPetShop.esm
+- 00083C:GalacticPetShop.esm
+- 00084B:GalacticPetShop.esm
+- 000858:GalacticPetShop.esm

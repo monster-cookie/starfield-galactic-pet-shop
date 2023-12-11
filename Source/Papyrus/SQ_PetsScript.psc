@@ -1,5 +1,11 @@
 ScriptName SQ_PetsScript Extends SQ_ActorRolesScript conditional
-{ Quest script attached to SQ_Pets. Handles various pet functionality }
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Global Variables
+;;;
+GlobalVariable Property Venpi_DebugEnabled Auto Const Mandatory
+String Property Venpi_ModName Auto Const Mandatory
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;

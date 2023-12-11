@@ -1,0 +1,8 @@
+FormKey: 000869:GalacticPetShop.esm
+MajorRecordFlagsRaw: 64
+EditorID: PET_IdleChatterTimeMin
+StarfieldMajorRecordFlags:
+- 0x40
+Data: 120
+MajorFlags:
+- Constant

@@ -1,0 +1,268 @@
+FormKey: 00085A:GalacticPetShop.esm
+EditorID: SQ_Pets
+VirtualMachineAdapter:
+  Scripts:
+  - Name: SQ_PetsScript
+    Properties:
+    - MutagenObjectType: ScriptObjectProperty
+      Name: ActiveMessage
+      Object: 2A6C4D:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: Alias_Active
+      Object: 00D773:Starfield.esm
+      Alias: 17
+    - MutagenObjectType: ScriptObjectProperty
+      Name: Alias_Available
+      Object: 00D773:Starfield.esm
+      Alias: 20
+    - MutagenObjectType: ScriptObjectProperty
+      Name: Alias_MessageTextReplaceActor
+      Object: 00D773:Starfield.esm
+      Alias: 15
+    - MutagenObjectType: ScriptObjectProperty
+      Name: Alias_MessageTextReplaceRef
+      Object: 00D773:Starfield.esm
+      Alias: 23
+    - MutagenObjectType: ScriptObjectProperty
+      Name: AvailableMessage
+      Object: 00D8A3:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: AV_Active
+      Object: 000865:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: AV_Available
+      Object: 000866:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: Cached_PrePetAggression
+      Object: 000867:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PetState
+      Object: 00085B:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_IdleChatterTimeMax
+      Object: 000868:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_IdleChatterTimeMin
+      Object: 000869:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_PreviousIdleChatterTimeMax
+      Object: 00086A:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PET_PreviousIdleChatterTimeMin
+      Object: 00086B:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: IdleChatterTimeMax
+      Object: 0002CD:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: IdleChatterTimeMin
+      Object: 0002CC:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: iFollower_Com_Follow
+      Object: 00D839:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: iFollower_Com_GoHome
+      Object: 00D83B:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: iFollower_Com_Wait
+      Object: 00D83A:Starfield.esm
+    - MutagenObjectType: ScriptStringProperty
+      Name: MainLogName
+      Data: Pets
+    - MutagenObjectType: ScriptObjectProperty
+      Name: NotActiveMessage
+      Object: 000864:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: NotAvailableMessage
+      Object: 000862:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerPets_HasPet
+      Object: 000860:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerPets_HasPetFollowing
+      Object: 00085D:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerPets_HasPetWaiting
+      Object: 00085C:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerPets_Count
+      Object: 000861:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerPets_CountFollowing
+      Object: 00085F:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerPets_CountWaiting
+      Object: 00085E:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerShipCrewMarker
+      Object: 0174A2:Starfield.esm
+      Alias: 6
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_ActorRoles_SuppressMessages
+      Object: 2073D9:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Companions
+      Object: 2A567C:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Crew
+      Object: 2A567D:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Followers
+      Object: 00D773:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Followers_DisallowTeleportWaitingFollowersToShip
+      Object: 16700D:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Followers_GroupFormation_Faction
+      Object: 2A9766:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Followers_IdleChatterAllowed
+      Object: 154DC9:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Followers_Link_WaitAtRef
+      Object: 0A4822:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Followers_TeleportToShipWithPlayerWhenWaiting
+      Object: 1EA944:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Pets_Wait
+      Object: 00086C:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_PlayerShip
+      Object: 0174A2:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_PreventRecalc
+      Object: 3D2EBB:Starfield.esm
+    - MutagenObjectType: ScriptStringProperty
+      Name: SubLogName
+      Data: SQ_Pets
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Pets
+      Object: 00085A:GalacticPetShop.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: Venpi_DebugEnabled
+      Object: 000800:VenpiCore.esm
+    - MutagenObjectType: ScriptStringProperty
+      Name: Venpi_ModName
+      Data: GalacticPetShop
+  Script:
+    Name: ''
+  Aliases:
+  - Property:
+      Name: ''
+      Object: 00085A:GalacticPetShop.esm
+      Alias: 17
+    Scripts:
+    - Name: SQ_Pets_ActivePetsScript
+      Properties:
+      - MutagenObjectType: ScriptObjectProperty
+        Name: COM_SandboxDistancePollSuccessful
+        Object: 239D2F:Starfield.esm
+      - MutagenObjectType: ScriptObjectProperty
+        Name: Venpi_DebugEnabled
+        Object: 000800:VenpiCore.esm
+      - MutagenObjectType: ScriptStringProperty
+        Name: Venpi_ModName
+        Data: GalacticPetShop
+Name:
+  TargetLanguage: English
+  Value: Handles various systems for Pets
+Data:
+  Flags:
+  - StartGameEnabled
+  - StartsEnabled
+  - 0x10000
+  - 0x100000
+  - 0x400000
+  Priority: 90
+  Unused: 0x000000
+QuestType: 0475F8:Starfield.esm
+Filter: Pets\SQ\
+UnusedConditions: []
+Stages:
+- Flags:
+  - RunOnStart
+  - KeepInstanceDataFromHereOn
+  Unknown: 116
+Objectives:
+- Index: 100
+  Flags: []
+  DisplayText:
+    TargetLanguage: English
+    Value: Retrieve waiting pets
+  Targets:
+  - AliasID: 17
+    Conditions:
+    - MutagenObjectType: ConditionGlobal
+      Unknown1: 0x000000
+      Data:
+        MutagenObjectType: GetValueConditionData
+        FirstParameter: 50333787
+      ComparisonValue: 00D83A:Starfield.esm
+Aliases:
+- MutagenObjectType: QuestCollectionAlias
+  Collection:
+  - ID: 17
+    ALAM: 0
+    ReferenceAlias:
+      ID: 17
+      Name: ActivePets
+      Flags:
+      - Optional
+      ALFG: 0
+      CombatOverridePackageList: 00D843:Starfield.esm
+      Spells:
+      - 298B28:Starfield.esm
+      Factions:
+      - 03BD86:Starfield.esm
+      PackageData:
+      - 00086C:GalacticPetShop.esm
+      - 00086D:GalacticPetShop.esm
+      - 000801:GalacticPetShop.esm
+      - 00084C:GalacticPetShop.esm
+      - 000859:GalacticPetShop.esm
+      - 00086E:GalacticPetShop.esm
+      VoiceTypes: Null
+- MutagenObjectType: QuestCollectionAlias
+  Collection:
+  - ID: 20
+    MaxInitialFillCount: 1
+    ReferenceAlias:
+      ID: 20
+      Name: AvailablePets
+      Flags:
+      - Optional
+      ALFG: 0
+      VoiceTypes: Null
+- MutagenObjectType: QuestLocationAlias
+  ID: 14
+  Name: MessageTextReplaceLocation
+  Flags:
+  - Optional
+  - AllowReuseInQuest
+  - StoresText
+  - AllowCleared
+  ALFG: 0
+- MutagenObjectType: QuestReferenceAlias
+  ID: 15
+  Name: MessageTextReplaceActor
+  Flags:
+  - Optional
+  - AllowReuseInQuest
+  - StoresText
+  ALFG: 0
+  VoiceTypes: Null
+- MutagenObjectType: QuestReferenceAlias
+  ID: 23
+  Name: MessageTextReplaceRef
+  Flags:
+  - Optional
+  - StoresText
+  ALFG: 0
+  VoiceTypes: Null
+- MutagenObjectType: QuestReferenceAlias
+  ID: 26
+  Name: PrimaryActorAlias
+  Flags:
+  - Optional
+  ALFG: 0
+  VoiceTypes: Null
