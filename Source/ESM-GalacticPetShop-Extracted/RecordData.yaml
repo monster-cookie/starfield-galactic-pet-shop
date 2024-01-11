@@ -1,13 +1,13 @@
 SpriggitSource:
   PackageName: Spriggit.Yaml.Starfield
-  Version: 0.13.0
+  Version: 0.14.0
 ModKey: GalacticPetShop.esm
 GameRelease: Starfield
 ModHeader:
   Flags:
   - Master
   Stats:
-    NumRecords: 72
+    NumRecords: 75
     NextFormID: 2159
   Author: ''
   MasterReferences:

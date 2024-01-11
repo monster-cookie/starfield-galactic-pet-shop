@@ -1,0 +1,185 @@
+FormKey: 00086C:GalacticPetShop.esm
+EditorID: SQ_Pets_Wait
+Flags:
+- NoCombatAlert
+Type: Package
+PreferredSpeed: Run
+InteruptFlags:
+- HellosToPlayer
+- RandomConversations
+- GreetCorpseBehavior
+- ReactionToPlayerActions
+- FriendlyFireComments
+- AggroRadiusBehavior
+- AllowIdleChatter
+- WorldInteractions
+- OffForImportantScene
+- 0x800
+- 0x1000
+- 0x2000
+- 0x4000
+- 0x8000
+ScheduleDayOfWeek: 255
+ScheduleHour: -1
+ScheduleMinute: -1
+Unknown3: 0x000000
+Conditions:
+- MutagenObjectType: ConditionGlobal
+  Unknown1: 0x000000
+  Data:
+    MutagenObjectType: GetValueConditionData
+    FirstParameter: 836
+  ComparisonValue: 00D83A:Starfield.esm
+OwnerQuest: 00085A:GalacticPetShop.esm
+DataInputVersion: 1
+Data:
+- Key: 1
+  Value:
+    MutagenObjectType: PackageDataLocation
+    Name: Place to Travel
+    Flags:
+    - Public
+    Location:
+      Target:
+        MutagenObjectType: LocationFallback
+        Type: NearPackageStart
+      Radius: 1065353216
+- Key: 17
+  Value:
+    MutagenObjectType: PackageDataLocation
+    Name: WaitLinkedRefLocation
+    Flags:
+    - Public
+    Location:
+      Target:
+        MutagenObjectType: LocationKeyword
+        Link: 0A4822:Starfield.esm
+      Radius: 1065353216
+- Key: 3
+  Value:
+    MutagenObjectType: PackageDataBool
+    Name: Prefer Preferred Path?
+    Flags:
+    - Public
+- Key: 5
+  Value:
+    MutagenObjectType: PackageDataBool
+    Name: Use "soft radius"?
+    Flags:
+    - Public
+    Data: True
+- Key: 7
+  Value:
+    MutagenObjectType: PackageDataBool
+    Name: Ignore marker orientation?
+    Flags:
+    - Public
+    Data: True
+- Key: 8
+  Value:
+    MutagenObjectType: PackageDataTarget
+    Name: Player
+    Flags:
+    - Public
+    Type: SingleRef
+    Target:
+      MutagenObjectType: PackageTargetSpecificReference
+      Reference: 000014:Starfield.esm
+- Key: 10
+  Value:
+    MutagenObjectType: PackageDataBool
+    Name: true
+    Flags:
+    - Public
+    Data: True
+- Key: 12
+  Value:
+    MutagenObjectType: PackageDataFloat
+    Name: Min Time Headtrack
+    Flags:
+    - Public
+    Data: 30
+- Key: 14
+  Value:
+    MutagenObjectType: PackageDataFloat
+    Name: Max Time Headtrack
+    Flags:
+    - Public
+    Data: 60
+- Key: 16
+  Value:
+    MutagenObjectType: PackageDataBool
+    Name: false
+    Flags:
+    - Public
+PackageGroup: 18
+ProcedureTree:
+- BranchType: Simultaneous
+  Root:
+    BranchCount: 2
+- BranchType: Procedure
+  ProcedureType: HeadTrack
+  Flags: []
+  DataInputIndices:
+  - 8
+  - 10
+  - 12
+  - 14
+  - 16
+- BranchType: Stacked
+  Root:
+    BranchCount: 2
+- BranchType: Procedure
+  Conditions:
+  - MutagenObjectType: ConditionFloat
+    Unknown1: 0x0080D0
+    Unknown2: 17624
+    Data:
+      MutagenObjectType: HasLinkedRefConditionData
+      FirstParameter: 0A4822:Starfield.esm
+  ProcedureType: Travel
+  Flags:
+  - SuccessCompletesPackage
+  DataInputIndices:
+  - 1
+  - 255
+  - 3
+  - 5
+  - 7
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+- BranchType: Procedure
+  Conditions:
+  - MutagenObjectType: ConditionFloat
+    Unknown1: 0x4B4332
+    Unknown2: 17624
+    Data:
+      MutagenObjectType: HasLinkedRefConditionData
+      FirstParameter: 0A4822:Starfield.esm
+    ComparisonValue: 1
+  ProcedureType: Travel
+  Flags:
+  - SuccessCompletesPackage
+  DataInputIndices:
+  - 17
+  - 255
+  - 3
+  - 5
+  - 7
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+OnBegin:
+  Topics:
+  - MutagenObjectType: TopicReference
+OnEnd:
+  Topics:
+  - MutagenObjectType: TopicReference
+OnChange:
+  Topics:
+  - MutagenObjectType: TopicReference

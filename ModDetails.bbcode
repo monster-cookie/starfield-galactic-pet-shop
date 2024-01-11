@@ -1,0 +1,68 @@
+[size=4][b][u]Overview[/u][/b][/size]
+Non combat pets for your ships, outposts, and friendly neighborhood lodge. In this iteration you purchase and deploy pet beds via the outpost/decoration menu. There are 2 versions (common and rare) with vastly different costs. At them moment there are 5 common and 2 rare pets. 
+
+Currently I have it set to let you deploy a maximum of 2 pets. Around 4 things get weird and feisty with a lot of companions and passengers. 
+
+[quote]
+  NOTE: This is very much a beta. Pets are none combat and the SQ_Pets implementation based on SQ_Followers has issues with waiting on ship.
+  [color=#ff0000]WARNING:[/color] Version 1.0.8+ uses a special version of xEdit that can copy REFL records to add a custom pets category to the decorator and beacons. I have tested it as best as I can with new games, NG+ universes, outposts, and ships.
+[/quote]
+
+[size=4][b][u]Features[/u][/b][/size]
+[list]
+[*]Pets are able to be spawned and set to follow you
+[*]Pet scaling and dismissing is functional
+[/list]
+
+[size=4][b][u]Planned Features[/u][/b][/size]
+[list]
+[*]Work out a way to use the transform or terminal system to show previews of the pets. 
+[*]Combat pets
+[*]Adjust scale on spawn to match the height of the room you are spawning them into.
+[*]Sleeping pets using the creature lair system
+[*]Custom pet beds that match the type of pet right now everything is a cage
+[*]See if I can resurrect the mount code that is present in the CCT/Keyword/OMod stuff.
+[*]Customizable skins 
+[*]Always with more pets
+[/list]
+
+[size=4][b][u]Usage[/u][/b][/size]
+Go into outpost build mode and find it in the decorations section and deploy some pet beds.
+
+To remove a pet until I get a safer way implemented
+[list=1]
+[*]Highlight and click on the pet in/with the console
+[*]Use mouse scroll to to find the npc_ entry 
+[*]Run disable;markfordelete;
+[*]Close the console
+[/list]
+
+[b][u]Installation [/u][/b]
+[size=3][b]Via Vortex/MO2[/b][/size]
+Install as normally would any mod mod. 
+
+[size=3][b]Installation Manually[/b][/size]
+Really please use a mod manage :) 
+
+Download the current zip file. Please everything in the Data folder in the zip to the same place under <Game Install Dir aka where starfield.exe is>\Data.
+
+[size=3][b]Handling the plugins.txt file[/b][/size]
+You need to add GalacticPetShop.esm and VenpiCore.esm to your plugins.txt file see below for help. Should be ordered like this in the file.
+
+[code]
+*VenpiCore.esm
+*GalacticPetShop.esm
+[/code]
+
+These are instructions from the author of the mod:
+[img]https://i.imgur.com/MD5uU3j.png[/img]
+
+[size=4][b][u]Social Presence[/u][/b][/size]
+[list]
+[*]I can be found as Venpi hanging out in the xEdit and Starfield Nexus Mod's discord servers.
+[*]I have created the [url=https://discord.gg/zssJMGHmWD]Venworks Discord Community[/url] for discussing, tracking, bug reporting, and helping out with my mods and Starfield modding research.
+[*]You can follow me on threads as [url=https://www.threads.net/@monstercookiebd]@monstercookiebd[/url]
+[/list]
+
+[size=4][b][u]Source Code[/u][/b][/size]
+The source code to this is on GitHub under the repository [url=https://github.com/monster-cookie/starfield-galactic-pet-shop]starfield-galactic-pet-shop[/url]

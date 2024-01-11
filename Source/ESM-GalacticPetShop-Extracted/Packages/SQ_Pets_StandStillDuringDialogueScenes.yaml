@@ -1,0 +1,81 @@
+FormKey: 00086D:GalacticPetShop.esm
+EditorID: SQ_Pets_StandStillDuringDialogueScenes
+Flags:
+- TreatAsPlayerFollower
+- NoCombatAlert
+Type: Package
+PreferredSpeed: Run
+InteruptFlags:
+- HellosToPlayer
+- GreetCorpseBehavior
+- ReactionToPlayerActions
+- FriendlyFireComments
+- AggroRadiusBehavior
+- AllowIdleChatter
+- WorldInteractions
+- OffForImportantScene
+- 0x800
+- 0x1000
+- 0x2000
+- 0x4000
+- 0x8000
+ScheduleDayOfWeek: 255
+ScheduleHour: -1
+ScheduleMinute: -1
+Unknown3: 0x000000
+Conditions:
+- MutagenObjectType: ConditionFloat
+  Unknown1: 0x000000
+  Data:
+    MutagenObjectType: IsTrueForConditionFormConditionData
+    FirstParameter: 054B37:Starfield.esm
+  ComparisonValue: 1
+OwnerQuest: 00085A:GalacticPetShop.esm
+PackageTemplate: 092347:Starfield.esm
+DataInputVersion: 5
+Data:
+- Key: 1
+  Value:
+    MutagenObjectType: PackageDataLocation
+    Location:
+      Target:
+        MutagenObjectType: LocationFallback
+        Type: NearSelf
+- Key: 4
+  Value:
+    MutagenObjectType: PackageDataTarget
+    Type: SingleRef
+    Target:
+      MutagenObjectType: PackageTargetSpecificReference
+      Reference: 000014:Starfield.esm
+- Key: 6
+  Value:
+    MutagenObjectType: PackageDataBool
+    Data: True
+- Key: 3
+  Value:
+    MutagenObjectType: PackageDataBool
+- Key: 8
+  Value:
+    MutagenObjectType: PackageDataBool
+    Data: True
+- Key: 10
+  Value:
+    MutagenObjectType: PackageDataBool
+- Key: 12
+  Value:
+    MutagenObjectType: PackageDataFloat
+- Key: 13
+  Value:
+    MutagenObjectType: PackageDataBool
+    Data: True
+PackageGroup: 16
+OnBegin:
+  Topics:
+  - MutagenObjectType: TopicReference
+OnEnd:
+  Topics:
+  - MutagenObjectType: TopicReference
+OnChange:
+  Topics:
+  - MutagenObjectType: TopicReference

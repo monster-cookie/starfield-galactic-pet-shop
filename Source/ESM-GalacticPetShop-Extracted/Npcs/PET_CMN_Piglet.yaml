@@ -1,0 +1,73 @@
+FormKey: 000826:GalacticPetShop.esm
+EditorID: PET_CMN_Piglet
+ObjectBounds:
+  First: -0.591797, -0.3623047, 0
+  Second: 0.59179676, 1.0341797, 1.2373047
+ODTY: 0
+Flags:
+- Essential
+- AutoCalcStats
+- Unique
+- Protected
+Level:
+  MutagenObjectType: PcLevelMult
+  LevelMult: 1
+CalcMinLevel: 1
+CalcMaxLevel: 999
+DispositionBase: 35
+Factions:
+- Faction: 052407:Starfield.esm
+DeathItem: 077833:Starfield.esm
+TemplateActors:
+  StatsTemplate: 162606:Starfield.esm
+Race: 261647:Starfield.esm
+Skin: 186401:Starfield.esm
+CombatOverridePackageList: 0102ED:Starfield.esm
+Properties:
+- ActorValue: 0002C2:Starfield.esm
+- ActorValue: 0002C3:Starfield.esm
+- ActorValue: 0002C4:Starfield.esm
+- ActorValue: 0002C5:Starfield.esm
+- ActorValue: 0002C6:Starfield.esm
+- ActorValue: 0002C7:Starfield.esm
+- ActorValue: 0002C8:Starfield.esm
+- ActorValue: 0002D4:Starfield.esm
+- ActorValue: 0002D5:Starfield.esm
+- ActorValue: 0002DA:Starfield.esm
+  Value: 100
+- ActorValue: 0002E3:Starfield.esm
+  Value: 50
+Confidence: Cautious
+EnergyLevel: 50
+Responsibility: NoCrime
+Mood: Happy
+Assistance: HelpsFriendsAndAllies
+UnknownAIDT: 1
+Keywords:
+- 258350:Starfield.esm
+- 0FCF75:Starfield.esm
+- 11EA10:Starfield.esm
+- 141506:Starfield.esm
+Class: 1CD0A9:Starfield.esm
+Name:
+  TargetLanguage: English
+  Value: Piglet
+ShortName:
+  TargetLanguage: English
+  Value: Piglet
+LongName:
+  TargetLanguage: English
+  Value: Piglet
+GearedUpWeapons: 1
+NAM5: 0xFF00
+HeightMin: 0.3
+HeightMax: 0.6
+Weight:
+  Thin: 0.3333
+  Muscular: 0.3333
+  Fat: 0.3333
+InheritsSoundsFrom: 320B9A:Starfield.esm
+DefaultPackageList: 000855:GalacticPetShop.esm
+Tints: []
+SkinToneIndex: 0
+Pronoun: Unspecified

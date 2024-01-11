@@ -1,0 +1,73 @@
+FormKey: 000848:GalacticPetShop.esm
+EditorID: PET_RAR_Aceles
+ObjectBounds:
+  First: -0.93451697, -1.5515777, -3.9346844E-07
+  Second: 0.93451697, 1.6279436, 1.8653576
+ODTY: 0
+Flags:
+- Essential
+- AutoCalcStats
+- Unique
+- Protected
+Level:
+  MutagenObjectType: PcLevelMult
+  LevelMult: 1
+CalcMinLevel: 1
+CalcMaxLevel: 999
+DispositionBase: 35
+Factions:
+- Faction: 052407:Starfield.esm
+DeathItem: 077833:Starfield.esm
+TemplateActors:
+  StatsTemplate: 162606:Starfield.esm
+Race: 2CCAB0:Starfield.esm
+Skin: 203C2C:Starfield.esm
+CombatOverridePackageList: 0102ED:Starfield.esm
+Properties:
+- ActorValue: 0002C2:Starfield.esm
+- ActorValue: 0002C3:Starfield.esm
+- ActorValue: 0002C4:Starfield.esm
+- ActorValue: 0002C5:Starfield.esm
+- ActorValue: 0002C6:Starfield.esm
+- ActorValue: 0002C7:Starfield.esm
+- ActorValue: 0002C8:Starfield.esm
+- ActorValue: 0002D4:Starfield.esm
+- ActorValue: 0002D5:Starfield.esm
+- ActorValue: 0002DA:Starfield.esm
+  Value: 100
+- ActorValue: 0002E3:Starfield.esm
+  Value: 50
+Confidence: Cautious
+EnergyLevel: 50
+Responsibility: NoCrime
+Mood: Happy
+Assistance: HelpsFriendsAndAllies
+UnknownAIDT: 1
+Keywords:
+- 258350:Starfield.esm
+- 11EA0F:Starfield.esm
+- 141505:Starfield.esm
+- 023B19:Starfield.esm
+Class: 1CD0A9:Starfield.esm
+Name:
+  TargetLanguage: English
+  Value: Aceles
+ShortName:
+  TargetLanguage: English
+  Value: Aceles
+LongName:
+  TargetLanguage: English
+  Value: Aceles
+GearedUpWeapons: 1
+NAM5: 0xFF00
+HeightMin: 0.3
+HeightMax: 0.5
+Weight:
+  Thin: 0.3333
+  Muscular: 0.3333
+  Fat: 0.3333
+InheritsSoundsFrom: 3ADB2E:Starfield.esm
+DefaultPackageList: 000855:GalacticPetShop.esm
+Tints: []
+SkinToneIndex: 0
+Pronoun: Unspecified

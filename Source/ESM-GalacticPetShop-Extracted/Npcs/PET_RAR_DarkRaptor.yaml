@@ -1,0 +1,85 @@
+FormKey: 000827:GalacticPetShop.esm
+EditorID: PET_RAR_DarkRaptor
+ObjectBounds:
+  First: -0.591797, -0.3623047, 0
+  Second: 0.59179676, 1.0341797, 1.2373047
+ODTY: 0
+Flags:
+- Essential
+- AutoCalcStats
+- Unique
+- Protected
+Level:
+  MutagenObjectType: PcLevelMult
+  LevelMult: 1
+CalcMinLevel: 1
+CalcMaxLevel: 999
+DispositionBase: 35
+Factions:
+- Faction: 052407:Starfield.esm
+DeathItem: 077833:Starfield.esm
+TemplateActors:
+  StatsTemplate: 2AD4E3:Starfield.esm
+  FactionsTemplate: 2AD4E3:Starfield.esm
+  SpellListTemplate: 2AD4E3:Starfield.esm
+  AiDataTemplate: 2AD4E3:Starfield.esm
+  AiPackagesTemplate: 2AD4E3:Starfield.esm
+  ModelOrAnimationTemplate: 2AD4E3:Starfield.esm
+  InventoryTemplate: 2AD4E3:Starfield.esm
+  ScriptTemplate: 2AD4E3:Starfield.esm
+  DefPackListTemplate: 2AD4E3:Starfield.esm
+  AttackDataTemplate: 2AD4E3:Starfield.esm
+  KeywordsTemplate: 2AD4E3:Starfield.esm
+  Unknown1: 2AD4E3:Starfield.esm
+  Unknown2: 2AD4E3:Starfield.esm
+Race: 243BFC:Starfield.esm
+Skin: 1719C9:Starfield.esm
+CombatOverridePackageList: 0102ED:Starfield.esm
+Properties:
+- ActorValue: 0002C2:Starfield.esm
+- ActorValue: 0002C3:Starfield.esm
+- ActorValue: 0002C4:Starfield.esm
+- ActorValue: 0002C5:Starfield.esm
+- ActorValue: 0002C6:Starfield.esm
+- ActorValue: 0002C7:Starfield.esm
+- ActorValue: 0002C8:Starfield.esm
+- ActorValue: 0002D4:Starfield.esm
+- ActorValue: 0002D5:Starfield.esm
+- ActorValue: 0002DA:Starfield.esm
+  Value: 100
+- ActorValue: 0002E3:Starfield.esm
+  Value: 50
+Confidence: Cautious
+EnergyLevel: 50
+Responsibility: NoCrime
+Mood: Happy
+Assistance: HelpsFriendsAndAllies
+UnknownAIDT: 1
+Keywords:
+- 258350:Starfield.esm
+- 200B08:Starfield.esm
+- 0992E1:Starfield.esm
+- 141505:Starfield.esm
+Class: 1CD0A9:Starfield.esm
+Name:
+  TargetLanguage: English
+  Value: Dark Raptor
+ShortName:
+  TargetLanguage: English
+  Value: Raptor
+LongName:
+  TargetLanguage: English
+  Value: Dark Raptor
+GearedUpWeapons: 1
+NAM5: 0xFF00
+HeightMin: 0.15
+HeightMax: 0.45
+Weight:
+  Thin: 0.3333
+  Muscular: 0.3333
+  Fat: 0.3333
+InheritsSoundsFrom: 183B0B:Starfield.esm
+DefaultPackageList: 000855:GalacticPetShop.esm
+Tints: []
+SkinToneIndex: 0
+Pronoun: Unspecified

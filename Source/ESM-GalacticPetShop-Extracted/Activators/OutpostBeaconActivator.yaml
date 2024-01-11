@@ -1,0 +1,84 @@
+FormKey: 2C60E9:Starfield.esm
+MajorRecordFlagsRaw: 536870976
+EditorID: OutpostBeaconActivator
+StarfieldMajorRecordFlags:
+- 0x40
+- 0x20000000
+VirtualMachineAdapter:
+  Scripts:
+  - Name: outpostbeaconscript
+    Properties:
+    - MutagenObjectType: ScriptObjectProperty
+      Name: LocTypeOutpost
+      Object: 0234F1:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: OutpostSurveyBoost
+      Object: 0924F7:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: OutpostSurveyBoostMessage
+      Object: 0924F8:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: OutpostTutorial
+      Object: 1ED71C:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Companions
+      Object: 2A567C:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Crew
+      Object: 2A567D:Starfield.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SQ_Parent
+      Object: 07092C:Starfield.esm
+ObjectBounds:
+  First: -0.99658203, -0.99658203, -0.00024414062
+  Second: 0.99658203, 0.99658203, 5.583838
+ODTY: 0
+SnapTemplate: 1D6187:Starfield.esm
+SnapBehavior: 23EB4D:Starfield.esm
+Components:
+- MutagenObjectType: AnimationGraphComponent
+  ANAM: AnimTextData\Tables\Graphs\OutpostDeployToLoop.agx
+  BNAM: setdressing\outpost\beacon\characterassets\skeleton.rig
+  CNAM: setdressing\outpost\beacon\animations
+- MutagenObjectType: EffectSequenceComponent
+  REFL: 0x4245544808000000040000000900000053545254A400000042475345666665637453657175656E6365466F726D436F6D706F6E656E740075704D61700045666665637453657175656E63654D61700053657175656E6365730070506172656E74466F726D0045666665637453657175656E63654D61704D657461646174610054696D656C696E65537461727454696D650054696D656C696E65556E697473506572506978656C004D61704D65746164617461004D6574616461746100545950450400000003000000434C41533C0000002500000000000000000004003700000004FFFFFF080030004100000005FFFFFF480008008F0000004D000000500008009B00000004FFFFFF58005800434C4153180000000000000000000000000001001F00000005FFFFFF48000800434C4153240000004D00000000000000000002006700000011FFFFFF000004007900000011FFFFFF040004004F424A541800000000000000250000000DFFFFFF16173B00000000000000803F4D4150430C00000001FFFFFF01FFFFFF000000004D4150430C00000001FFFFFF01FFFFFF00000000
+Name:
+  TargetLanguage: English
+  Value: Outpost Beacon
+Model:
+  File: SetDressing\Outpost\Beacon\beacon01.nif
+  FLLD: 0x01000000
+Keywords:
+- 008406:Starfield.esm
+- 02BD59:Starfield.esm
+- 04AF68:Starfield.esm
+- 054BA7:Starfield.esm
+- 05A6DE:Starfield.esm
+- 06D72D:Starfield.esm
+- 0E6A3E:Starfield.esm
+- 1A1C3B:Starfield.esm
+- 1D9F5F:Starfield.esm
+- 1E6641:Starfield.esm
+- 1EC788:Starfield.esm
+- 27319A:Starfield.esm
+- 2731A0:Starfield.esm
+- 28F890:Starfield.esm
+- 293ADF:Starfield.esm
+- 2A7578:Starfield.esm
+- 2BE3B5:Starfield.esm
+- 2CFDE6:Starfield.esm
+- 397027:Starfield.esm
+- 000843:GalacticPetShop.esm
+Properties:
+- ActorValue: 063FC5:Starfield.esm
+  Value: 150
+- ActorValue: 25E596:Starfield.esm
+  Value: 1
+ForcedLocations:
+- 3E8651:Starfield.esm
+MarkerColor: '#00CC4C33'
+Flags: []
+ActivationAngle: 360
+MajorFlags:
+- 0x40
+- ChildCanUse

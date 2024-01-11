@@ -3,7 +3,7 @@ EditorID: co_Outpost_Petbeds_Rare
 Description:
   TargetLanguage: English
   Value: Rare Pets
-WorkbenchKeyword: 293ADF:Starfield.esm
+WorkbenchKeyword: 000843:GalacticPetShop.esm
 ConstructableComponents:
 - Component: 00000F:Starfield.esm
   Count: 100000
