@@ -1,5 +1,8 @@
 # Venpi's Galactic Pet Store
 
+## Version 1.0.9
+* Removed the categories and overridden beacon/decorator. Now using the stuff from Outpost Builder Categories. This is now a hard requirement.
+
 ## Version 1.0.8
 * Thank you Tritch for solving the category problems with the pets.
 * This uses a custom version of xEdit to copy REFL records. I've tested it as best I could with new games, NG+ Universes, and multiple outposts/ships. 

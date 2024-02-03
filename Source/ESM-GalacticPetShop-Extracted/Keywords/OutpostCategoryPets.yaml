@@ -1,9 +1,0 @@
-FormKey: 000843:GalacticPetShop.esm
-EditorID: OutpostCategoryPets
-Color: '#00FFFFFF'
-Type: RecipeFilter
-FNAM: 0x00000000
-Name:
-  TargetLanguage: English
-  Value: >+
-    Pets

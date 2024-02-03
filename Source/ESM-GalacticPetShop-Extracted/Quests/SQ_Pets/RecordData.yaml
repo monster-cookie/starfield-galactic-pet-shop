@@ -196,7 +196,7 @@ Objectives:
       Unknown1: 0x000000
       Data:
         MutagenObjectType: GetValueConditionData
-        FirstParameter: 50333787
+        FirstParameter: 67111003
       ComparisonValue: 00D83A:Starfield.esm
 Aliases:
 - MutagenObjectType: QuestCollectionAlias

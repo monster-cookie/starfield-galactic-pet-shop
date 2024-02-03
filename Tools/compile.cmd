@@ -11,12 +11,6 @@ del /s /q "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dis
 rmdir /s /q "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist"
 mkdir "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist"
 
-@REM Clear Dist-Patch-GrindterraFactions DIR
-@echo "Clearing and scafolding the Dist-Patch-GrindterraFactions dir"
-del /s /q "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-Patch-OutpostConstructionExpanded\*.*"
-rmdir /s /q "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-Patch-OutpostConstructionExpanded"
-mkdir "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-Patch-OutpostConstructionExpanded"
-
 @REM Clear Dist-BA2-Main DIR
 @echo "Clearing and scafolding the Dist-BA2-Main dir"
 del /s /q "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA2-Main\*.*"
@@ -39,14 +33,9 @@ mkdir "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-BA
 copy /y "D:\MO2Staging\Starfield\mods\GalacticPetShop-Experimental\GalacticPetShop.esm" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\ESM"
 copy /y "D:\MO2Staging\Starfield\mods\GalacticPetShop-Experimental\GalacticPetShop.esm" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist"
 
-
-@echo "Copying the ESM from MO2 into the Dist-Patch-GrindterraFactions folder"
-copy /y "D:\MO2Staging\Starfield\mods\GalacticPetShop-OutpostConstructionExpanded-Patch-Experimental\GalacticPetShop-OutpostConstructionExpanded-Patch.esm" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\ESM"
-copy /y "D:\MO2Staging\Starfield\mods\GalacticPetShop-OutpostConstructionExpanded-Patch-Experimental\GalacticPetShop-OutpostConstructionExpanded-Patch.esm" "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Dist-Patch-OutpostConstructionExpanded"
 @REM Use Spriggit to extract record from ESM
 @echo "Running Spriggit to extract record from ESM"
 "D:\Program Files\Spriggit\Spriggit.CLI.exe" serialize --InputPath "D:\MO2Staging\Starfield\mods\GalacticPetShop-Experimental\GalacticPetShop.esm" --OutputPath "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\ESM-GalacticPetShop-Extracted" --GameRelease Starfield --PackageName Spriggit.Yaml
-"D:\Program Files\Spriggit\Spriggit.CLI.exe" serialize --InputPath "D:\MO2Staging\Starfield\mods\GalacticPetShop-OutpostConstructionExpanded-Patch-Experimental\GalacticPetShop-OutpostConstructionExpanded-Patch.esm" --OutputPath "C:\Repositories\Public\Starfield Mods\starfield-galactic-pet-shop\Source\ESM-GalacticPetShop-OutpostConstructionExpanded-Patch-Extracted" --GameRelease Starfield --PackageName Spriggit.Yaml
 
 @REM Create and copy the BA2 Main Archive to Dist folder
 @echo "Creating the BA2 Main Archive"
